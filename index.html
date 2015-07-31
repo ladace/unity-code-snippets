@@ -67,6 +67,20 @@ Assign <code>theObject</code> with the object you want to activate/deactivate.</
 }
 </pre></div>
 
+<h3>
+<a id="encounter" class="anchor" href="#encounter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Encounter</h3>
+
+<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
+<span class="pl-k">using</span> System.Collections;
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Encounter</span> : <span class="pl-k">MonoBehaviour</span> {
+    <span class="pl-k">public</span> GameObject blockerObject;
+
+    <span class="pl-k">void</span> <span class="pl-en">OnTriggerEnter</span> (<span class="pl-k">Collider</span> <span class="pl-smi">collider</span>) {
+        blockerObject.SetActive (<span class="pl-c1">false</span>);
+    }
+}</pre></div>
+
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/ladace/unity-code-snippets">Unity-code-snippets</a> is maintained by <a href="https://github.com/ladace">ladace</a>.</span>
 
