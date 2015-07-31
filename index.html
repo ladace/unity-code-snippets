@@ -44,7 +44,7 @@ Assign <code>theObject</code> with the object you want to activate/deactivate.</
 }</pre></div>
 
 <h3>
-<a id="shooting-stuff" class="anchor" href="#shooting-stuff" aria-hidden="true"><span class="octicon octicon-link"></span></a>Shooting stuff</h3>
+<a id="shooting" class="anchor" href="#shooting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Shooting</h3>
 
 <p>Assign a prefab as the archetype of bullets to the bullet field of this component.</p>
 
@@ -69,6 +69,9 @@ Assign <code>theObject</code> with the object you want to activate/deactivate.</
 
 <h3>
 <a id="encounter" class="anchor" href="#encounter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Encounter</h3>
+
+<p>Attach this to an object with a trigger (collider with <code>Is Trigger</code> toggled on).
+Assign an object to <code>blockerObject</code>. It will deactivate the object.</p>
 
 <div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
 <span class="pl-k">using</span> System.Collections;
