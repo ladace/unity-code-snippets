@@ -37,6 +37,22 @@
 <p><strong>The file name must be the same as the class name.</strong></p>
 
 <h3>
+<a id="press-button-to-load-the-game-in-start-screen" class="anchor" href="#press-button-to-load-the-game-in-start-screen" aria-hidden="true"><span class="octicon octicon-link"></span></a>Press button to load the game in start screen</h3>
+
+<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
+<span class="pl-k">using</span> System.Collections;
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Title</span> : <span class="pl-k">MonoBehaviour</span> {
+
+    <span class="pl-c">// Update is called once per frame</span>
+    <span class="pl-k">void</span> <span class="pl-en">Update</span> () {
+        <span class="pl-k">if</span> (Input.GetButtonDown (<span class="pl-s"><span class="pl-pds">"</span>Submit<span class="pl-pds">"</span></span>)) {
+            Application.LoadLevel (<span class="pl-s"><span class="pl-pds">"</span>Game<span class="pl-pds">"</span></span>);
+        }
+    }
+}</pre></div>
+
+<h3>
 <a id="activatedeactivate-a-object-on-clicking-a-collider" class="anchor" href="#activatedeactivate-a-object-on-clicking-a-collider" aria-hidden="true"><span class="octicon octicon-link"></span></a>Activate/Deactivate a object on clicking a collider</h3>
 
 <p>Attach the following script to a object that has at least one collider.
