@@ -46,7 +46,8 @@ Assign <code>theObject</code> with the object you want to activate/deactivate.</
 <h3>
 <a id="shooting" class="anchor" href="#shooting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Shooting</h3>
 
-<p>Assign a prefab as the archetype of bullets to the bullet field of this component.</p>
+<p>Assign a prefab as the archetype of bullets to the bullet field of this component.
+The bullet prefab needs to have a Rigidbody on it.</p>
 
 <div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
 <span class="pl-k">using</span> System.Collections;
@@ -83,6 +84,27 @@ Assign an object to <code>blockerObject</code>. It will deactivate the object.</
         blockerObject.SetActive (<span class="pl-c1">false</span>);
     }
 }</pre></div>
+
+<h3>
+<a id="object-that-keeps-moving-to-a-direction" class="anchor" href="#object-that-keeps-moving-to-a-direction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Object that keeps moving to a direction</h3>
+
+<p>It will check if the object has a Rigidbody. If so, use the Rigidbody component to move; otherwise just change the position of the Transform component.</p>
+
+<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
+<span class="pl-k">using</span> System.Collections;
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MovingAlong</span> : <span class="pl-k">MonoBehaviour</span> {
+    <span class="pl-k">public</span> Vector3 direction;
+
+    <span class="pl-k">void</span> <span class="pl-en">Update</span> () {
+        Rigidbody rd = GetComponent&lt;Rigidbody&gt; ();
+        <span class="pl-k">if</span> (rd == <span class="pl-c1">null</span>)
+            transform.position += direction * Time.deltaTime;
+        <span class="pl-k">else</span>
+            GetComponent&lt;Rigidbody&gt; ().velocity = direction;
+    }
+}
+</pre></div>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/ladace/unity-code-snippets">Unity-code-snippets</a> is maintained by <a href="https://github.com/ladace">ladace</a>.</span>
