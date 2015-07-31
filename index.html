@@ -123,6 +123,23 @@ Assign an object to <code>blockerObject</code>. It will deactivate the object.</
     }
 }</pre></div>
 
+<h3>
+<a id="touch-and-gameover" class="anchor" href="#touch-and-gameover" aria-hidden="true"><span class="octicon octicon-link"></span></a>Touch and gameover</h3>
+
+<p>As soon as the object touches the player, load gameover level.</p>
+
+<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
+<span class="pl-k">using</span> System.Collections;
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Lethal</span> : <span class="pl-k">MonoBehaviour</span> {
+    <span class="pl-k">public</span> <span class="pl-k">string</span> gameoverSceneName;
+    <span class="pl-k">void</span> <span class="pl-en">OnCollisionEnter</span> (<span class="pl-k">Collision</span> <span class="pl-smi">collision</span>) {
+        <span class="pl-k">if</span> (collision.collider.tag == <span class="pl-s"><span class="pl-pds">"</span>Player<span class="pl-pds">"</span></span>) {
+            Application.LoadLevel (gameoverSceneName);
+        }
+    }
+}</pre></div>
+
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/ladace/unity-code-snippets">Unity-code-snippets</a> is maintained by <a href="https://github.com/ladace">ladace</a>.</span>
 
