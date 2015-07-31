@@ -52,20 +52,17 @@ Assign <code>theObject</code> with the object you want to activate/deactivate.</
 <span class="pl-k">using</span> System.Collections;
 
 <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Shooter</span> : <span class="pl-k">MonoBehaviour</span> {
-    <span class="pl-k">public</span> GameObject bullet;
-    <span class="pl-c">// Use this for initialization</span>
-    <span class="pl-k">void</span> <span class="pl-en">Start</span> () {
 
-    }
+    <span class="pl-k">public</span> GameObject bulletPrefab;
+    <span class="pl-k">public</span> <span class="pl-k">float</span> bulletSpeed;
 
     <span class="pl-c">// Update is called once per frame</span>
     <span class="pl-k">void</span> <span class="pl-en">Update</span> () {
         <span class="pl-k">if</span> (Input.GetButtonDown (<span class="pl-s"><span class="pl-pds">"</span>Fire1<span class="pl-pds">"</span></span>)) {
-            Vector3 direction = GetComponentInChildren&lt;Camera&gt;().transform.TransformDirection (Vector3.forward); 
-            GameObject obj = Instantiate (bullet, transform.position + direction * <span class="pl-c1">2</span>, transform.rotation) <span class="pl-k">as</span> GameObject;
-            obj.GetComponent&lt;Rigidbody&gt;().velocity = direction * <span class="pl-c1">100</span>;
+            Vector3 direction = GetComponentInChildren&lt;Camera&gt;().transform.TransformDirection(Vector3.forward);
+            GameObject obj = Instantiate (bulletPrefab, transform.position + direction * <span class="pl-c1">2</span>, Quaternion.identity) <span class="pl-k">as</span> GameObject;
+            obj.GetComponent&lt;Rigidbody&gt;().velocity = bulletSpeed * direction;
         }
-
     }
 }
 </pre></div>
