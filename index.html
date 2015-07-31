@@ -22,6 +22,20 @@
       <h1>
 <a id="code-snippets-for-unity" class="anchor" href="#code-snippets-for-unity" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code Snippets for Unity</h1>
 
+<p><strong>To use the script, you must create a script that has the same name as the class name (which is the word after <code>class</code> word.</strong></p>
+
+<p>For example,</p>
+
+<div class="highlight highlight-csharp"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MyClassName</span> : <span class="pl-k">MonoBehaviour</span> {
+    <span class="pl-k">void</span> <span class="pl-en">Start</span> () {
+        Debug.Log(<span class="pl-s"><span class="pl-pds">"</span>Hello, world<span class="pl-pds">"</span></span>);
+    }
+}</pre></div>
+
+<p>You have to create a file called <code>MyClassName</code>, otherwise you can change the word after <code>class</code> to the name of the file.</p>
+
+<p><strong>The file name must be the same as the class name.</strong></p>
+
 <h3>
 <a id="activatedeactivate-a-object-on-clicking-a-collider" class="anchor" href="#activatedeactivate-a-object-on-clicking-a-collider" aria-hidden="true"><span class="octicon octicon-link"></span></a>Activate/Deactivate a object on clicking a collider</h3>
 
@@ -159,6 +173,33 @@ You have to create a <strong>gameover scene</strong> and add it to your build se
         }
     }
 }</pre></div>
+
+<h3>
+<a id="spawner" class="anchor" href="#spawner" aria-hidden="true"><span class="octicon octicon-link"></span></a>Spawner</h3>
+
+<p>Spawns an object from <code>archetype</code> Prefab every <code>interval</code> seconds, at a random position inside a circle of <code>radius</code>.</p>
+
+<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
+<span class="pl-k">using</span> System.Collections;
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Spawner</span> : <span class="pl-k">MonoBehaviour</span> {
+
+    <span class="pl-k">public</span> GameObject archetype;
+    <span class="pl-k">public</span> <span class="pl-k">float</span> interval;
+    <span class="pl-k">public</span> <span class="pl-k">float</span> range;
+
+    <span class="pl-k">void</span> <span class="pl-en">Start</span> () {
+        StartCoroutine (SpawnRountine ());
+    }
+
+    IEnumerator <span class="pl-en">SpawnRoutine</span> () {
+        <span class="pl-k">while</span> (<span class="pl-c1">true</span>) {
+            <span class="pl-k">yield</span> <span class="pl-k">return</span> <span class="pl-k">new</span> WaitForSeconds (interval);
+            Instantiate (archetype, transform.position + Random.insideUnitSphere * range, Quaternion.identity);
+        }
+    }
+}
+</pre></div>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/ladace/unity-code-snippets">Unity-code-snippets</a> is maintained by <a href="https://github.com/ladace">ladace</a>.</span>
