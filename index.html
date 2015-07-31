@@ -109,6 +109,25 @@ Assign an object to <code>blockerObject</code>. It will deactivate the object.</
 </pre></div>
 
 <h3>
+<a id="object-that-moves-to-another-object" class="anchor" href="#object-that-moves-to-another-object" aria-hidden="true"><span class="octicon octicon-link"></span></a>object that moves to another object</h3>
+
+<p>Assign the <code>target</code> value with the actual target of the movement.</p>
+
+<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
+<span class="pl-k">using</span> System.Collections;
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MoveTo</span> : <span class="pl-k">MonoBehaviour</span> {
+
+    <span class="pl-k">public</span> Transform target;
+    <span class="pl-k">public</span> <span class="pl-k">float</span> speed;
+
+    <span class="pl-k">void</span> <span class="pl-en">Update</span> () {
+        transform.position = Vector3.MoveTowards (transform.position, target.position, speed * Time.deltaTime);
+    }
+}
+</pre></div>
+
+<h3>
 <a id="killed-by-bullet" class="anchor" href="#killed-by-bullet" aria-hidden="true"><span class="octicon octicon-link"></span></a>Killed by bullet</h3>
 
 <p>As soon as the object collides with a bullet tagged as "Bullet", it is killed.</p>
