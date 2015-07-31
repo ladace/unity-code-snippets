@@ -43,6 +43,33 @@ Assign <code>theObject</code> with the object you want to activate/deactivate.</
     }
 }</pre></div>
 
+<h3>
+<a id="shooting-stuff" class="anchor" href="#shooting-stuff" aria-hidden="true"><span class="octicon octicon-link"></span></a>Shooting stuff</h3>
+
+<p>Assign a prefab as the archetype of bullets to the bullet field of this component.</p>
+
+<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
+<span class="pl-k">using</span> System.Collections;
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Shooter</span> : <span class="pl-k">MonoBehaviour</span> {
+    <span class="pl-k">public</span> GameObject bullet;
+    <span class="pl-c">// Use this for initialization</span>
+    <span class="pl-k">void</span> <span class="pl-en">Start</span> () {
+
+    }
+
+    <span class="pl-c">// Update is called once per frame</span>
+    <span class="pl-k">void</span> <span class="pl-en">Update</span> () {
+        <span class="pl-k">if</span> (Input.GetButtonDown (<span class="pl-s"><span class="pl-pds">"</span>Fire1<span class="pl-pds">"</span></span>)) {
+            Vector3 direction = GetComponentInChildren&lt;Camera&gt;().transform.TransformDirection (Vector3.forward); 
+            GameObject obj = Instantiate (bullet, transform.position + direction * <span class="pl-c1">2</span>, transform.rotation) <span class="pl-k">as</span> GameObject;
+            obj.GetComponent&lt;Rigidbody&gt;().velocity = direction * <span class="pl-c1">100</span>;
+        }
+
+    }
+}
+</pre></div>
+
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/ladace/unity-code-snippets">Unity-code-snippets</a> is maintained by <a href="https://github.com/ladace">ladace</a>.</span>
 
