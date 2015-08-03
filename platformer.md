@@ -60,3 +60,24 @@ public class Player : MonoBehaviour {
 	}
 }
 ```
+
+## Spikes
+
+### Elementary
+
+Destroying the player object:
+
+```csharp
+using UnityEngine;
+using System.Collections;
+
+public class Lethal : MonoBehaviour {
+	void OnTriggerEnter2D (Collider2D collider) {
+		if (collider.tag == "Player") {
+			Destroy(collider.gameObject);
+		}
+	}
+}
+```
+
+Or 
