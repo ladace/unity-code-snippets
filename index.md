@@ -6,6 +6,10 @@ title: Unity Code Snippets
 
  - [How to Build the Game](build.html)
 
+# Category
+
+ - [Platformer](platformer.html)
+
 # Code Snippets
 
 **To use these scripts, you must create a script that has the same name as the class name (which is the word after `class` word.**
