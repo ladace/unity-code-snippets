@@ -53,7 +53,7 @@ public class Player : MonoBehaviour {
 			RaycastHit2D res = Physics2D.BoxCast ((Vector2)transform.position + Vector2.Scale (scale, col.offset), Vector2.Scale (scale, col.size),
 			                   transform.rotation.eulerAngles.z, Vector2.down, Mathf.Infinity, groundMask);
 
-			if (res.collider != null && res.distance <= 0.01f) { // if the player is on ground
+			if (res.collider != null && res.distance <= 0.02f) { // if the player is on ground
 				GetComponent<Rigidbody2D>().velocity = new Vector2(speed * Input.GetAxis ("Horizontal"), jumpSpeed);
 			}
 		}
