@@ -15,9 +15,9 @@ public class Player : MonoBehaviour {
 	public float speed;
 
 	void Update () {
-	  float oldY = GetComponent<Rigidbody2D>().velocity.y;
+		float oldY = GetComponent<Rigidbody2D> ().velocity.y;
 		GetComponent<Rigidbody2D>().velocity =
-			speed * new Vector2(Input.GetAxis ("Horizontal"), oldY);
+			new Vector2(speed * Input.GetAxis ("Horizontal"), oldY);
 	}
 }
 
