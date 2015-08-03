@@ -79,8 +79,22 @@ public class Lethal : MonoBehaviour {
 	}
 }
 ```
+Or loading the loaded level
 
-Or load the gameover screen.
+```csharp
+using UnityEngine;
+using System.Collections;
+
+public class Lethal : MonoBehaviour {
+	void OnTriggerEnter2D (Collider2D collider) {
+		if (collider.tag == "Player") {
+			Application.LoadLevel(Application.loadedLevel);
+		}
+	}
+}
+```
+
+Or loading the gameover screen.
 
 ```csharp
 using UnityEngine;
