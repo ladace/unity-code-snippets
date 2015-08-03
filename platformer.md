@@ -80,4 +80,17 @@ public class Lethal : MonoBehaviour {
 }
 ```
 
-Or 
+Or load the gameover screen.
+
+```csharp
+using UnityEngine;
+using System.Collections;
+
+public class Lethal : MonoBehaviour {
+	void OnTriggerEnter2D (Collider2D collider) {
+		if (collider.tag == "Player") {
+			Application.LoadLevel("GameOver");
+		}
+	}
+}
+```
