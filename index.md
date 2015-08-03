@@ -4,7 +4,7 @@ title: Unity Code Snippets
 
 # Guide
 
- - [How to Build the Game](/build.html)
+ - [How to Build the Game](build.html)
 
 # Code Snippets
 
