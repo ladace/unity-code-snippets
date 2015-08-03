@@ -177,6 +177,8 @@ public class FragileEnemy : MonoBehaviour {
 ### Touch and gameover
 
 As soon as the object touches the player, load gameover level.
+
+The object should have a collider (not a trigger) on it.
 You have to create a **gameover scene** and add it to your build settings.
 
 ```csharp
