@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Unity-code-snippets by ladace</title>
+    <title>Unity Code Snippets</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -19,211 +19,216 @@
     </section>
 
     <section class="main-content">
-      <h1>
-<a id="code-snippets-for-unity" class="anchor" href="#code-snippets-for-unity" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code Snippets for Unity</h1>
+      <h1 id="code-snippets-for-unity">Code Snippets for Unity</h1>
 
 <p><strong>To use the script, you must create a script that has the same name as the class name (which is the word after <code>class</code> word.</strong></p>
 
 <p>For example,</p>
 
-<div class="highlight highlight-csharp"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MyClassName</span> : <span class="pl-k">MonoBehaviour</span> {
-    <span class="pl-k">void</span> <span class="pl-en">Start</span> () {
-        Debug.Log(<span class="pl-s"><span class="pl-pds">"</span>Hello, world<span class="pl-pds">"</span></span>);
+<p><code>csharp
+public class MyClassName : MonoBehaviour {
+    void Start () {
+        Debug.Log("Hello, world");
     }
-}</pre></div>
+}
+</code></p>
 
 <p>You have to create a file called <code>MyClassName</code>, otherwise you can change the word after <code>class</code> to the name of the file.</p>
 
 <p><strong>The file name must be the same as the class name.</strong></p>
 
-<h3>
-<a id="press-button-to-enter-the-game-in-title-screen" class="anchor" href="#press-button-to-enter-the-game-in-title-screen" aria-hidden="true"><span class="octicon octicon-link"></span></a>Press button to enter the game in title screen</h3>
+<h3 id="press-button-to-enter-the-game-in-title-screen">Press button to enter the game in title screen</h3>
 
 <p>Create an empty object in your title screen and attach this script.
-Replace "Game" with whatever you name for your game level (in double quotes).</p>
+Replace “Game” with whatever you name for your game level (in double quotes).
+```csharp
+using UnityEngine;
+using System.Collections;</p>
 
-<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
-<span class="pl-k">using</span> System.Collections;
+<p>public class Title : MonoBehaviour {</p>
 
-<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Title</span> : <span class="pl-k">MonoBehaviour</span> {
+<pre><code>// Update is called once per frame
+void Update () {
+	if (Input.GetButtonDown ("Submit")) {
+		Application.LoadLevel ("Game");
+	}
+} } ```
+</code></pre>
 
-    <span class="pl-c">// Update is called once per frame</span>
-    <span class="pl-k">void</span> <span class="pl-en">Update</span> () {
-        <span class="pl-k">if</span> (Input.GetButtonDown (<span class="pl-s"><span class="pl-pds">"</span>Submit<span class="pl-pds">"</span></span>)) {
-            Application.LoadLevel (<span class="pl-s"><span class="pl-pds">"</span>Game<span class="pl-pds">"</span></span>);
-        }
-    }
-}</pre></div>
-
-<h3>
-<a id="activatedeactivate-a-object-on-clicking-a-collider" class="anchor" href="#activatedeactivate-a-object-on-clicking-a-collider" aria-hidden="true"><span class="octicon octicon-link"></span></a>Activate/Deactivate a object on clicking a collider</h3>
+<h3 id="activatedeactivate-a-object-on-clicking-a-collider">Activate/Deactivate a object on clicking a collider</h3>
 
 <p>Attach the following script to a object that has at least one collider.
 Assign <code>theObject</code> with the object you want to activate/deactivate.</p>
 
-<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
-<span class="pl-k">using</span> System.Collections;
+<p>```csharp
+using UnityEngine;
+using System.Collections;</p>
 
-<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Switch</span> : <span class="pl-k">MonoBehaviour</span> {
+<p>public class Switch : MonoBehaviour {</p>
 
-    <span class="pl-k">public</span> GameObject theObject;
+<pre><code>public GameObject theObject;
 
-    <span class="pl-k">void</span> <span class="pl-en">OnMouseDown</span> () {
-        <span class="pl-k">if</span> (theObject.activeSelf)
-            theObject.SetActive (<span class="pl-c1">false</span>);
-        <span class="pl-k">else</span>
-            theObject.SetActive (<span class="pl-c1">true</span>);
-    }
-}</pre></div>
+void OnMouseDown () {
+	if (theObject.activeSelf)
+		theObject.SetActive (false);
+	else
+		theObject.SetActive (true);
+} } ```
+</code></pre>
 
-<h3>
-<a id="shooting" class="anchor" href="#shooting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Shooting</h3>
+<h3 id="shooting">Shooting</h3>
 
 <p>Assign a prefab as the archetype of bullets to the bullet field of this component.
 The bullet prefab needs to have a Rigidbody on it.</p>
 
-<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
-<span class="pl-k">using</span> System.Collections;
+<p>```csharp
+using UnityEngine;
+using System.Collections;</p>
 
-<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Shooter</span> : <span class="pl-k">MonoBehaviour</span> {
+<p>public class Shooter : MonoBehaviour {</p>
 
-    <span class="pl-k">public</span> GameObject bulletPrefab;
-    <span class="pl-k">public</span> <span class="pl-k">float</span> bulletSpeed;
+<pre><code>public GameObject bulletPrefab;
+public float bulletSpeed;
+	
+// Update is called once per frame
+void Update () {
+	if (Input.GetButtonDown ("Fire1")) {
+		Vector3 direction = GetComponentInChildren&lt;Camera&gt;().transform.TransformDirection(Vector3.forward);
+		GameObject obj = Instantiate (bulletPrefab, transform.position + direction * 2, Quaternion.identity) as GameObject;
+		obj.GetComponent&lt;Rigidbody&gt;().velocity = bulletSpeed * direction;
+	}
+} }
+</code></pre>
 
-    <span class="pl-c">// Update is called once per frame</span>
-    <span class="pl-k">void</span> <span class="pl-en">Update</span> () {
-        <span class="pl-k">if</span> (Input.GetButtonDown (<span class="pl-s"><span class="pl-pds">"</span>Fire1<span class="pl-pds">"</span></span>)) {
-            Vector3 direction = GetComponentInChildren&lt;Camera&gt;().transform.TransformDirection(Vector3.forward);
-            GameObject obj = Instantiate (bulletPrefab, transform.position + direction * <span class="pl-c1">2</span>, Quaternion.identity) <span class="pl-k">as</span> GameObject;
-            obj.GetComponent&lt;Rigidbody&gt;().velocity = bulletSpeed * direction;
-        }
-    }
-}
-</pre></div>
+<p>```</p>
 
-<h3>
-<a id="encounter" class="anchor" href="#encounter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Encounter</h3>
+<h3 id="encounter">Encounter</h3>
 
 <p>Attach this to an object with a trigger (collider with <code>Is Trigger</code> toggled on).
 Assign an object to <code>blockerObject</code>. It will deactivate the object.</p>
 
-<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
-<span class="pl-k">using</span> System.Collections;
+<p>```csharp
+using UnityEngine;
+using System.Collections;</p>
 
-<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Encounter</span> : <span class="pl-k">MonoBehaviour</span> {
-    <span class="pl-k">public</span> GameObject blockerObject;
+<p>public class Encounter : MonoBehaviour {
+	public GameObject blockerObject;</p>
 
-    <span class="pl-k">void</span> <span class="pl-en">OnTriggerEnter</span> (<span class="pl-k">Collider</span> <span class="pl-smi">collider</span>) {
-        <span class="pl-k">if</span> (collider.tag == <span class="pl-s"><span class="pl-pds">"</span>Player<span class="pl-pds">"</span></span>) {
-            blockerObject.SetActive (<span class="pl-c1">false</span>);
-        }
-    }
-}</pre></div>
+<pre><code>void OnTriggerEnter (Collider collider) {
+	if (collider.tag == "Player") {
+		blockerObject.SetActive (false);
+	}
+} } ```
+</code></pre>
 
-<h3>
-<a id="object-that-keeps-moving-to-a-direction" class="anchor" href="#object-that-keeps-moving-to-a-direction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Object that keeps moving to a direction</h3>
+<h3 id="object-that-keeps-moving-to-a-direction">Object that keeps moving to a direction</h3>
 
 <p>It will check if the object has a Rigidbody. If so, use the Rigidbody component to move; otherwise just change the position of the Transform component.</p>
 
-<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
-<span class="pl-k">using</span> System.Collections;
+<p>```csharp
+using UnityEngine;
+using System.Collections;</p>
 
-<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MovingAlong</span> : <span class="pl-k">MonoBehaviour</span> {
-    <span class="pl-k">public</span> Vector3 direction;
+<p>public class MovingAlong : MonoBehaviour {
+	public Vector3 direction;</p>
 
-    <span class="pl-k">void</span> <span class="pl-en">Update</span> () {
-        Rigidbody rd = GetComponent&lt;Rigidbody&gt; ();
-        <span class="pl-k">if</span> (rd == <span class="pl-c1">null</span>)
-            transform.position += direction * Time.deltaTime;
-        <span class="pl-k">else</span>
-            GetComponent&lt;Rigidbody&gt; ().velocity = direction;
-    }
-}
-</pre></div>
+<pre><code>void Update () {
+	Rigidbody rd = GetComponent&lt;Rigidbody&gt; ();
+	if (rd == null)
+		transform.position += direction * Time.deltaTime;
+	else
+		GetComponent&lt;Rigidbody&gt; ().velocity = direction;
+} }
+</code></pre>
 
-<h3>
-<a id="object-that-moves-to-another-object" class="anchor" href="#object-that-moves-to-another-object" aria-hidden="true"><span class="octicon octicon-link"></span></a>object that moves to another object</h3>
+<p>```</p>
+
+<h3 id="object-that-moves-to-another-object">object that moves to another object</h3>
 
 <p>Assign the <code>target</code> value with the actual target of the movement.</p>
 
-<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
-<span class="pl-k">using</span> System.Collections;
+<p>```csharp
+using UnityEngine;
+using System.Collections;</p>
 
-<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MoveTo</span> : <span class="pl-k">MonoBehaviour</span> {
+<p>public class MoveTo : MonoBehaviour {</p>
 
-    <span class="pl-k">public</span> Transform target;
-    <span class="pl-k">public</span> <span class="pl-k">float</span> speed;
+<pre><code>public Transform target;
+public float speed;
 
-    <span class="pl-k">void</span> <span class="pl-en">Update</span> () {
-        transform.position = Vector3.MoveTowards (transform.position, target.position, speed * Time.deltaTime);
-    }
+void Update () {
+	transform.position = Vector3.MoveTowards (transform.position, target.position, speed * Time.deltaTime);
+} }
+</code></pre>
+
+<p>```
+### Killed by bullet</p>
+
+<p>As soon as the object collides with a bullet tagged as “Bullet”, it is killed.</p>
+
+<p>```csharp
+using UnityEngine;
+using System.Collections;</p>
+
+<p>public class FragileEnemy : MonoBehaviour {
+	void OnCollisionEnter (Collision collision) {
+		if (collision.collider.tag == “Bullet”)
+			Destroy (gameObject);
+	}
 }
-</pre></div>
+```</p>
 
-<h3>
-<a id="killed-by-bullet" class="anchor" href="#killed-by-bullet" aria-hidden="true"><span class="octicon octicon-link"></span></a>Killed by bullet</h3>
-
-<p>As soon as the object collides with a bullet tagged as "Bullet", it is killed.</p>
-
-<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
-<span class="pl-k">using</span> System.Collections;
-
-<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">FragileEnemy</span> : <span class="pl-k">MonoBehaviour</span> {
-    <span class="pl-k">void</span> <span class="pl-en">OnCollisionEnter</span> (<span class="pl-k">Collision</span> <span class="pl-smi">collision</span>) {
-        <span class="pl-k">if</span> (collision.collider.tag == <span class="pl-s"><span class="pl-pds">"</span>Bullet<span class="pl-pds">"</span></span>)
-            Destroy (gameObject);
-    }
-}</pre></div>
-
-<h3>
-<a id="touch-and-gameover" class="anchor" href="#touch-and-gameover" aria-hidden="true"><span class="octicon octicon-link"></span></a>Touch and gameover</h3>
+<h3 id="touch-and-gameover">Touch and gameover</h3>
 
 <p>As soon as the object touches the player, load gameover level.
 You have to create a <strong>gameover scene</strong> and add it to your build settings.</p>
 
-<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
-<span class="pl-k">using</span> System.Collections;
+<p>```csharp
+using UnityEngine;
+using System.Collections;</p>
 
-<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Lethal</span> : <span class="pl-k">MonoBehaviour</span> {
-    <span class="pl-k">public</span> <span class="pl-k">string</span> gameoverSceneName;
-    <span class="pl-k">void</span> <span class="pl-en">OnCollisionEnter</span> (<span class="pl-k">Collision</span> <span class="pl-smi">collision</span>) {
-        <span class="pl-k">if</span> (collision.collider.tag == <span class="pl-s"><span class="pl-pds">"</span>Player<span class="pl-pds">"</span></span>) {
-            Application.LoadLevel (gameoverSceneName);
-        }
-    }
-}</pre></div>
+<p>public class Lethal : MonoBehaviour {
+	public string gameoverSceneName;
+	void OnCollisionEnter (Collision collision) {
+		if (collision.collider.tag == “Player”) {
+			Application.LoadLevel (gameoverSceneName);
+		}
+	}
+}
+```</p>
 
-<h3>
-<a id="spawner" class="anchor" href="#spawner" aria-hidden="true"><span class="octicon octicon-link"></span></a>Spawner</h3>
+<h3 id="spawner">Spawner</h3>
 
 <p>Spawns an object from <code>archetype</code> Prefab every <code>interval</code> seconds, at a random position inside a circle of <code>radius</code>.</p>
 
-<div class="highlight highlight-csharp"><pre><span class="pl-k">using</span> UnityEngine;
-<span class="pl-k">using</span> System.Collections;
+<p>```csharp
+using UnityEngine;
+using System.Collections;</p>
 
-<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Spawner</span> : <span class="pl-k">MonoBehaviour</span> {
+<p>public class Spawner : MonoBehaviour {</p>
 
-    <span class="pl-k">public</span> GameObject archetype;
-    <span class="pl-k">public</span> <span class="pl-k">float</span> interval;
-    <span class="pl-k">public</span> <span class="pl-k">float</span> range;
+<pre><code>public GameObject archetype;
+public float interval;
+public float range;
 
-    <span class="pl-k">void</span> <span class="pl-en">Start</span> () {
-        StartCoroutine (SpawnRoutine ());
-    }
-
-    IEnumerator <span class="pl-en">SpawnRoutine</span> () {
-        <span class="pl-k">while</span> (<span class="pl-c1">true</span>) {
-            <span class="pl-k">yield</span> <span class="pl-k">return</span> <span class="pl-k">new</span> WaitForSeconds (interval);
-            Instantiate (archetype, transform.position + Random.insideUnitSphere * range, Quaternion.identity);
-        }
-    }
+void Start () {
+	StartCoroutine (SpawnRoutine ());
 }
-</pre></div>
+
+IEnumerator SpawnRoutine () {
+	while (true) {
+		yield return new WaitForSeconds (interval);
+		Instantiate (archetype, transform.position + Random.insideUnitSphere * range, Quaternion.identity);
+	}
+} }
+</code></pre>
+
+<p>```</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/ladace/unity-code-snippets">Unity-code-snippets</a> is maintained by <a href="https://github.com/ladace">ladace</a>.</span>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+        <span class="site-footer-credits"><a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
 
     </section>
@@ -231,4 +236,3 @@ You have to create a <strong>gameover scene</strong> and add it to your build se
   
   </body>
 </html>
-
