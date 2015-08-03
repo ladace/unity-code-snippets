@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>How To Build</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Unity-code-snippets</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/ladace/unity-code-snippets" class="btn">View on GitHub</a>
+      <a href="https://github.com/ladace/unity-code-snippets/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/ladace/unity-code-snippets/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <large><a href="/">Goto Home</a></large>
+      <h1>How to Build a Game</h1>
+
+<p>Assuming you have a scene file for gameplay, what you need to do is to create a title screen and link it to the main game.</p>
+
+<ol>
+<li>Create title screen.
+
+<ol>
+<li>(Optional) Prepare a image for you title screen.</li>
+<li>Create another scene in &quot;File &gt; New Scene&quot;.</li>
+<li>If you have a image, create a gameobject &quot;UI &gt; Image&quot;. Make it fit the screen and change its anchor mode to stretch.</li>
+<li>You can optionally put some texts by creating gameobjects &quot;UI &gt; Text&quot;.</li>
+</ol></li>
+<li><p>Press button in title screen to start the game.</p>
+
+<ol>
+<li><p>Create a script named &quot;Title.cs&quot;. Copy and paste the following code:</p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Title</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+
+    <span class="c1">// Update is called once per frame</span>
+    <span class="k">void</span> <span class="nf">Update</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetButtonDown</span> <span class="p">(</span><span class="s">&quot;Submit&quot;</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">Application</span><span class="p">.</span><span class="n">LoadLevel</span> <span class="p">(</span><span class="s">&quot;Game&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></li>
+<li><p>Change the text inside the parenthese after <code>LoadLevel</code> to whatever you name the gameplay scene by.</p></li>
+<li><p>Create an empty object in title screen and attach the code to it. (Add Component)</p></li>
+</ol></li>
+<li><p>Open each scene you want to include in the final build, and go to &quot;File &gt; Build Settings&quot;, click &quot;Add Current&quot; to add each scene to the settings. The title scene should always be the first scene in the build settings.</p></li>
+<li><p>Click build in Build Settings window.</p></li>
+</ol>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/ladace/unity-code-snippets">Unity-code-snippets</a> is maintained by <a href="https://github.com/ladace">ladace</a>.</span>
+
+        <span class="site-footer-credits"><a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>

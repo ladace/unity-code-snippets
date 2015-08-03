@@ -15,102 +15,102 @@
 
 */
 
-.pl-c /* comment */ {
+code .c /* comment */ {
   color: #969896;
 }
 
-.pl-c1      /* constant, markup.raw, meta.diff.header, meta.module-reference, meta.property-name, support, support.constant, support.variable, variable.other.constant */,
-.pl-s .pl-v /* string variable */ {
+code .c1      /* constant, markup.raw, meta.diff.header, meta.module-reference, meta.property-name, support, support.constant, support.variable, variable.other.constant */,
+code .s .v /* string variable */ {
   color: #0086b3;
 }
 
-.pl-e  /* entity */,
-.pl-en /* entity.name */ {
+code .e  /* entity */,
+code .en /* entity.name */ {
   color: #795da3;
 }
 
-.pl-s .pl-s1 /* string source */,
-.pl-smi      /* storage.modifier.import, storage.modifier.package, storage.type.java, variable.other, variable.parameter.function */ {
+code .s .s1 /* string source */,
+code .smi      /* storage.modifier.import, storage.modifier.package, storage.type.java, variable.other, variable.parameter.function */ {
   color: #333;
 }
 
-.pl-ent /* entity.name.tag */ {
+code .ent /* entity.name.tag */ {
   color: #63a35c;
 }
 
-.pl-k /* keyword, storage, storage.type */ {
+code .k /* keyword, storage, storage.type */ {
   color: #a71d5d;
 }
 
-.pl-pds              /* punctuation.definition.string, string.regexp.character-class */,
-.pl-s                /* string */,
-.pl-s .pl-pse .pl-s1 /* string punctuation.section.embedded source */,
-.pl-sr               /* string.regexp */,
-.pl-sr .pl-cce       /* string.regexp constant.character.escape */,
-.pl-sr .pl-sra       /* string.regexp string.regexp.arbitrary-repitition */,
-.pl-sr .pl-sre       /* string.regexp source.ruby.embedded */ {
+code .pds              /* punctuation.definition.string, string.regexp.character-class */,
+code .s                /* string */,
+code .s .pse .s1 /* string punctuation.section.embedded source */,
+code .sr               /* string.regexp */,
+code .sr .cce       /* string.regexp constant.character.escape */,
+code .sr .sra       /* string.regexp string.regexp.arbitrary-repitition */,
+code .sr .sre       /* string.regexp source.ruby.embedded */ {
   color: #183691;
 }
 
-.pl-v /* variable */ {
+code .v /* variable */ {
   color: #ed6a43;
 }
 
-.pl-id /* invalid.deprecated */ {
+code .id /* invalid.deprecated */ {
   color: #b52a1d;
 }
 
-.pl-ii /* invalid.illegal */ {
+code .ii /* invalid.illegal */ {
   background-color: #b52a1d;
   color: #f8f8f8;
 }
 
-.pl-sr .pl-cce /* string.regexp constant.character.escape */ {
+code .sr .cce /* string.regexp constant.character.escape */ {
   color: #63a35c;
   font-weight: bold;
 }
 
-.pl-ml /* markup.list */ {
+code .ml /* markup.list */ {
   color: #693a17;
 }
 
-.pl-mh        /* markup.heading */,
-.pl-mh .pl-en /* markup.heading entity.name */,
-.pl-ms        /* meta.separator */ {
+code .mh        /* markup.heading */,
+code .mh .en /* markup.heading entity.name */,
+code .ms        /* meta.separator */ {
   color: #1d3e81;
   font-weight: bold;
 }
 
-.pl-mq /* markup.quote */ {
+code .mq /* markup.quote */ {
   color: #008080;
 }
 
-.pl-mi /* markup.italic */ {
+code .mi /* markup.italic */ {
   color: #333;
   font-style: italic;
 }
 
-.pl-mb /* markup.bold */ {
+code .mb /* markup.bold */ {
   color: #333;
   font-weight: bold;
 }
 
-.pl-md /* markup.deleted, meta.diff.header.from-file */ {
+code .md /* markup.deleted, meta.diff.header.from-file */ {
   background-color: #ffecec;
   color: #bd2c00;
 }
 
-.pl-mi1 /* markup.inserted, meta.diff.header.to-file */ {
+code .mi1 /* markup.inserted, meta.diff.header.to-file */ {
   background-color: #eaffea;
   color: #55a532;
 }
 
-.pl-mdr /* meta.diff.range */ {
+code .mdr /* meta.diff.range */ {
   color: #795da3;
   font-weight: bold;
 }
 
-.pl-mo /* meta.output */ {
+code .mo /* meta.output */ {
   color: #1d3e81;
 }
 

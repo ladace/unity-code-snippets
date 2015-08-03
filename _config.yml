@@ -1,0 +1,9 @@
+defaults:
+ - scope:
+     path: ""
+   values:
+     layout: "default"
+kramdown:
+  input: GFM
+markdown: redcarpet
+highlighter: pygments

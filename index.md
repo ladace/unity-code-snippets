@@ -1,11 +1,14 @@
 ---
 title: Unity Code Snippets
-layout: default
 ---
 
-# Code Snippets for Unity
+# Guide
 
-**To use the script, you must create a script that has the same name as the class name (which is the word after `class` word.**
+ - [How to Build the Game](/build.html)
+
+# Code Snippets
+
+**To use these scripts, you must create a script that has the same name as the class name (which is the word after `class` word.**
 
 For example,
 
@@ -25,6 +28,7 @@ You have to create a file called `MyClassName`, otherwise you can change the wor
 
 Create an empty object in your title screen and attach this script.
 Replace "Game" with whatever you name for your game level (in double quotes).
+
 ```csharp
 using UnityEngine;
 using System.Collections;
@@ -149,6 +153,7 @@ public class MoveTo : MonoBehaviour {
 }
 
 ```
+
 ### Killed by bullet
 
 As soon as the object collides with a bullet tagged as "Bullet", it is killed.
