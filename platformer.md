@@ -92,7 +92,7 @@ You need to declare score variable in player script, put this line: `public int 
 using UnityEngine;
 using System.Collections;
 
-public class Coin : MonBehaviour {
+public class Coin : MonoBehaviour {
 	public OnTriggerEnter2D (Collider2D collider) {
 		if (collider.tag == "Player") {
 			collider.GetComponent<Player>().score++;
@@ -102,3 +102,19 @@ public class Coin : MonBehaviour {
 ```
 
 If the player script doesn't have `score` declared, the script will not run.
+
+## Moving Enemy
+
+Attach it to anything you want to move. Set `movingDirection` in the editor.
+
+```csharp
+using UnityEngine;
+using System.Collections;
+
+public class MovingEnemy : MonoBehaviour {
+	public Vector2 movingDirection;
+	void Update () {
+		GetComponent<Rigidbody2D>().velocity = movingDirection;
+	}
+}
+```
