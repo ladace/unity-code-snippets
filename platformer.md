@@ -149,6 +149,7 @@ public class WinArea : MonoBehaviour {
 ```
 
 If you want the player wins only if he has a score higher than a value, do a check before load the level, i.e `if (collider.GetComponent<Player>().score >= 3) Application.LoadLevel (Application.loadedLevel + 1);`. The code looks like:
+
 ```csharp
 		...
 		if (collider.tag == "Player") {
