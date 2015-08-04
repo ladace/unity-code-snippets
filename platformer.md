@@ -130,3 +130,30 @@ Insert this function to `Player`, and `Player` should have a `score` variable.
 		GUI.Label (new Rect (0, 0, 110, 30), "Score: " + score.ToString());
 	}
 ```
+
+## Win (Goal) Area
+
+Attach it to an object that has a trigger 2D.
+
+```csharp
+using UnityEngine;
+using System.Collections;
+
+public class WinArea : MonoBehaviour {
+	void OnTriggerEnter2D (Collider2D collider) {
+		if (collider.tag == "Player") {
+			Application.LoadLevel (Application.loadedLevel + 1);
+		}
+	}
+}
+```
+
+If you want the player wins only if he has a score higher than a value, do a check before load the level, i.e `if (collider.GetComponent<Player>().score >= 3) Application.LoadLevel (Application.loadedLevel + 1);`. The code looks like:
+```csharp
+		...
+		if (collider.tag == "Player") {
+			if (collider.GetComponent<Player>().score >= 3)
+				Application.LoadLevel (Application.loadedLevel + 1);
+		}
+		...
+```
