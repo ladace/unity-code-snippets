@@ -6,7 +6,7 @@ title: Unity Code Snippets
 
  - [How to Build the Game](build.html)
 
-# Category
+# Snippets For Categories
 
  - [Platformer](platformer.html)
 
