@@ -119,3 +119,13 @@ public class MovingEnemy : MonoBehaviour {
 	}
 }
 ```
+
+## Show score
+
+Insert this function to `Player`, and `Player` should have a `score` variable.
+
+```csharp
+	void OnGUI () {
+		GUI.Label (new Rect (0, 0, 110, 30), "Score: " + score.ToString());
+	}
+```
