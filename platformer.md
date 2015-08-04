@@ -107,6 +107,7 @@ If the player script doesn't have `score` declared, the script will not run.
 ## Moving Enemy
 
 Attach it to anything you want to move. Set `movingDirection` in the editor.
+The enemy should have a `Rigidbody2D` on it.
 
 ```csharp
 using UnityEngine;
