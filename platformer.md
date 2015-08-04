@@ -93,7 +93,7 @@ using UnityEngine;
 using System.Collections;
 
 public class Coin : MonoBehaviour {
-	public OnTriggerEnter2D (Collider2D collider) {
+	void OnTriggerEnter2D (Collider2D collider) {
 		if (collider.tag == "Player") {
 			collider.GetComponent<Player>().score++;
 		}
