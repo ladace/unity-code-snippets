@@ -31,6 +31,8 @@ Attach it to the player object, who must have a `Rigidbody2D` on it.
 
 The player object should be set to a unique layer. Edit the `groundMask` and toggle every layer but the player layer.
 
+*If you want the player to move constantly to the right/left, just replace `speed * Input.GetAxis("Horizontal")` with `speed` or `-speed`.*
+
 ```csharp
 using UnityEngine;
 using System.Collections;
@@ -63,23 +65,7 @@ public class Player : MonoBehaviour {
 
 ## Spikes
 
-### Elementary
-
-Destroying the player object:
-
-```csharp
-using UnityEngine;
-using System.Collections;
-
-public class Lethal : MonoBehaviour {
-	void OnTriggerEnter2D (Collider2D collider) {
-		if (collider.tag == "Player") {
-			Destroy(collider.gameObject);
-		}
-	}
-}
-```
-Or loading the loaded level
+When the player hit the spike, restart the whole level:
 
 ```csharp
 using UnityEngine;
@@ -94,17 +80,25 @@ public class Lethal : MonoBehaviour {
 }
 ```
 
-Or loading the gameover screen.
+If you want the game to load gameover screen, replace `Application.LoadLevel(Application.loadedLevel)` with `Application.LoadLevel("WhateverGameOverSceneNameHere")`.
+
+## Coins
+
+When the player hit the coin, add one score.
+
+You need to declare score variable in player script, put this line: `public int score;` in the player class.
 
 ```csharp
 using UnityEngine;
 using System.Collections;
 
-public class Lethal : MonoBehaviour {
-	void OnTriggerEnter2D (Collider2D collider) {
+public class Coin : MonBehaviour {
+	public OnTriggerEnter2D (Collider2D collider) {
 		if (collider.tag == "Player") {
-			Application.LoadLevel("GameOver");
+			collider.GetComponent<Player>().score++;
 		}
 	}
 }
 ```
+
+If the player script doesn't have `score` declared, the script will not run.
