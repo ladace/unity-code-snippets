@@ -26,6 +26,12 @@
 <li><a href="build.html">How to Build the Game</a></li>
 </ul>
 
+<h1>Category</h1>
+
+<ul>
+<li><a href="platformer.html">Platformer</a></li>
+</ul>
+
 <h1>Code Snippets</h1>
 
 <p><strong>To use these scripts, you must create a script that has the same name as the class name (which is the word after <code>class</code> word.</strong></p>
@@ -165,7 +171,9 @@ Assign an object to <code>blockerObject</code>. It will deactivate the object.</
 </code></pre></div>
 <h3>Touch and gameover</h3>
 
-<p>As soon as the object touches the player, load gameover level.
+<p>As soon as the object touches the player, load gameover level.</p>
+
+<p>The object should have a collider (not a trigger) on it.
 You have to create a <strong>gameover scene</strong> and add it to your build settings.</p>
 <div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
