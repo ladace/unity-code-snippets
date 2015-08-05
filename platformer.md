@@ -181,6 +181,9 @@ public class FollowingEnemy : MonoBehaviour {
 
 ## Camera Follow 2D
 
+To use this, you camera should not be a child of the player.
+`target` should be assigned as player.
+
 ```csharp
 using UnityEngine;
 using System.Collections;
