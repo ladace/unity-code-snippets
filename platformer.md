@@ -104,6 +104,27 @@ public class Coin : MonoBehaviour {
 
 If the player script doesn't have `score` declared, the script will not run.
 
+### Play Sound
+
+Insert `coinSound` member variable. i.e:
+
+```csharp
+...
+public class Coin : MonoBehaviour {
+	public AudioClip coinSound;
+	...
+```
+
+Ensure player has an `AudioSource` component. Then play the sound when player gets the coin:
+
+```csharp
+	...
+	if (collider.tag == "Player") {
+		collider.GetComponent<AudioSource>().PlayOneShot (coinSound);
+		collider.GetComponent<Player>().score++;
+		...
+```
+
 ## Moving Enemy
 
 Attach it to anything you want to move. Set `movingDirection` in the editor.
