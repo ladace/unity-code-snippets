@@ -188,13 +188,15 @@ The enemy should have `Rigidbody2D` on it and the player must be tagged "Player"
 using UnityEngine;
 using System.Collections;
 
-public class FollowingEnemy : MonoBehaviour {
+public class EnemyFollow : MonoBehaviour {
+
+	public float speed;
 	
 	void Update () {
 		GameObject player = GameObject.FindWithTag ("Player");
 		float dx = player.transform.position.x - transform.position.x;
 		Vector2 oldV = GetComponent<Rigidbody2D>().velocity;
-		oldV.x = Mathf.Clamp (dx, -1 * Time.deltaTime, 1 * Time.deltaTime);
+		oldV.x = Mathf.Clamp (dx, -speed * Time.deltaTime, speed * Time.deltaTime);
 		GetComponent<Rigidbody2D> ().velocity = oldV;	
 	}
 }
