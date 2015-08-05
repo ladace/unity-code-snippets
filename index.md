@@ -50,6 +50,28 @@ public class PressButtonToGo : MonoBehaviour {
 }
 ```
 
+### Go Back To Last Scene
+
+**Important: In `Lethal` and other scripts which load a gameover screen, replace `Application.LoadLevel` with `GameOver.LoadLevel`.**
+
+Use this instead of `PressButtonToGo` in the gameover screen, i.e. creating a empty game object as game controller and attach this script to it.
+
+```csharp
+public class GameOver : MonoBehaviour {
+	static private int lastLevelIdx;
+	static public void LoadLevel (int levelIndex) {
+		Application.LoadLevel(levelIndex);
+		lastLevelIdx = levelIndex;
+	}
+	
+	void Update () {
+		if (Input.GetButtonDown ("Submit")) {
+			Application.LoadLevel(lastLevelIdx);
+		}
+	}
+}
+```
+
 ### Activate/Deactivate a object on clicking a collider
 
 Attach the following script to a object that has at least one collider.
