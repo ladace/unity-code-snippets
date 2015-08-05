@@ -28,16 +28,18 @@ You have to create a file called `MyClassName`, otherwise you can change the wor
 
 **The file name must be the same as the class name.**
 
-### Press button to enter the game in title screen
+### Press Button To A Certain Scene
+
+**Could be used in the title scene, game over scene.**
 
 Create an empty object in your title screen and attach this script.
-Replace "Game" with whatever you name for your game level (in double quotes).
+Replace "Game" with the scene you want to go to (like whatever you name for your game level) (in double quotes).
 
 ```csharp
 using UnityEngine;
 using System.Collections;
 
-public class Title : MonoBehaviour {
+public class PressButtonToGo : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
