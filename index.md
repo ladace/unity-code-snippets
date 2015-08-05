@@ -57,6 +57,9 @@ public class PressButtonToGo : MonoBehaviour {
 Use this instead of `PressButtonToGo` in the gameover screen, i.e. creating a empty game object as game controller and attach this script to it.
 
 ```csharp
+using UnityEngine;
+using System.Collections;
+
 public class GameOver : MonoBehaviour {
 	static private int lastLevelIdx;
 	static public void LoadLevel (int levelIndex) {
