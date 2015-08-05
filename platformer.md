@@ -196,7 +196,7 @@ public class EnemyFollow : MonoBehaviour {
 		GameObject player = GameObject.FindWithTag ("Player");
 		float dx = player.transform.position.x - transform.position.x;
 		Vector2 oldV = GetComponent<Rigidbody2D>().velocity;
-		oldV.x = Mathf.Clamp (dx, -speed * Time.deltaTime, speed * Time.deltaTime);
+		oldV.x = Mathf.Clamp (dx / Time.deltaTime, -speed, speed);
 		GetComponent<Rigidbody2D> ().velocity = oldV;	
 	}
 }
