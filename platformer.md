@@ -158,3 +158,41 @@ If you want the player wins only if he has a score higher than a value, do a che
 		}
 		...
 ```
+
+## Enemy Following the Player
+
+The enemy should have `Rigidbody2D` on it and the player must be tagged "Player".
+
+```csharp
+using UnityEngine;
+using System.Collections;
+
+public class FollowingEnemy : MonoBehaviour {
+	
+	void Update () {
+		GameObject player = GameObject.FindWithTag ("Player");
+		float dx = player.transform.position.x - transform.position.x;
+		Vector2 oldV = GetComponent<Rigidbody2D>().velocity;
+		oldV.x = Mathf.Clamp (dx, -1 * Time.deltaTime, 1 * Time.deltaTime);
+		GetComponent<Rigidbody2D> ().velocity = oldV;	
+	}
+}
+```
+
+## Camera Follow 2D
+
+```csharp
+using UnityEngine;
+using System.Collections;
+
+public class CameraFollow2D : MonoBehaviour {
+
+	public Transform target;
+	public float speed;
+
+	void Update () {
+		Vector2 newPos = Vector2.MoveTowards (transform.position, target.position, speed * Time.deltaTime);
+		transform.position = new Vector3(newPos.x, newPos.y, transform.position.z);
+	}
+}
+```
