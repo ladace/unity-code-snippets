@@ -1,3 +1,7 @@
+---
+title: General Code
+---
+
 ### Press Button To A Certain Scene
 
 **Could be used in the title scene, game over scene.**

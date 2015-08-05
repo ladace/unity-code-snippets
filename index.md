@@ -12,7 +12,7 @@ title: Unity Code Snippets
  - [Platformer](platformer.html)
  - [3D Game](3d.html)
 
-# Code Snippets
+# How To Use
 
 **To use these scripts, you must create a script that has the same name as the class name (which is the word after `class` word.**
 
