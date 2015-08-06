@@ -446,7 +446,7 @@ using UnityEngine;
 using System.Collections;
 
 public class Spawner : MonoBehaviour {
-	public GameObject prefab;
+	public GameObject[] prefabs;
 	public float interval;
 
 	public void Start () {
@@ -456,7 +456,7 @@ public class Spawner : MonoBehaviour {
 	public IEnumerator SpawnRoutine () {
 		while (true) {
 			yield return new WaitForSeconds(interval);
-			Instantiate(prefab, transform.position, Quaternion.identity);
+			Instantiate(prefabs[Random.Range(0, prefabs.Length)], transform.position, Quaternion.identity);
 		}
 	}
 }
