@@ -112,7 +112,7 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 }
 ```
-### Animation
+### Frame Animation
 
 ```csharp
 using UnityEngine;
