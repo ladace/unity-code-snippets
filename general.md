@@ -38,7 +38,12 @@ public class GameOver : MonoBehaviour {
 	static private int lastLevelIdx;
 	static public void LoadLevel (int levelIndex) {
 		Application.LoadLevel(levelIndex);
-		lastLevelIdx = levelIndex;
+		lastLevelIdx = Application.loadedLevel;
+	}
+	
+	static public void LoadLevel (string level) {
+		Application.LoadLevel(level);
+		lastLevelIdx = Application.loadedLevel;
 	}
 
 	void Update () {
