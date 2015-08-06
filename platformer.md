@@ -131,7 +131,7 @@ public class FrameAnimation {
 			timer -= 1/frameRate;
 			if (looping) frameIdx %= frames.Length;
 			else frameIdx = Mathf.Min(frames.Length - 1, frameIdx);
-		
+
 			GetComponent<SpriteRenderer>().sprite = frames[frameIdx];
 		}
 	}
@@ -434,3 +434,29 @@ public class Killable : MonoBehaviour {
 		}
 	}
 }
+```
+
+## Spawner
+
+Spawn objects from a prefab around at a position.
+
+```csharp
+using UnityEngine;
+using System.Collections;
+
+public class Spawner : MonoBehaviour {
+	public GameObject prefab;
+	public float interval;
+
+	public Start () {
+		StartCoroutine(SpawnRoutine());
+	}
+
+	public IEnumerator SpawnRoutine () {
+		while (true) {
+			yield return new WaitForSeconds(interval);
+			Instantiate(prefab, transform.position, Quaternion.identity);
+		}
+	}
+}
+```

@@ -117,6 +117,7 @@
 
         <span class="k">if</span> <span class="p">(</span><span class="n">animationTimer</span> <span class="p">&gt;</span> <span class="m">1</span><span class="p">/</span><span class="n">frameRate</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">animationIdx</span><span class="p">++;</span>
+            <span class="n">animationTimer</span> <span class="p">-=</span> <span class="m">1</span><span class="p">/</span><span class="n">frameRate</span><span class="p">;</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">currentAnimation</span> <span class="p">==</span> <span class="n">walkingFrames</span><span class="p">)</span> <span class="n">animationIdx</span> <span class="p">%=</span> <span class="n">walkingFrames</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
             <span class="k">else</span> <span class="n">animationIdx</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Min</span><span class="p">(</span><span class="n">animationIdx</span><span class="p">,</span> <span class="n">currentAnimation</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">1</span><span class="p">);</span>
 
@@ -125,7 +126,30 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2>Fly</h2>
+<h3>Frame Animation</h3>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">FrameAnimation</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="n">Sprite</span><span class="p">[]</span> <span class="n">frames</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">frameRate</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">looping</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">float</span> <span class="n">timer</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">frameIdx</span><span class="p">;</span>
+    <span class="k">void</span> <span class="nf">Update</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">timer</span> <span class="p">+=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">timer</span> <span class="p">&gt;</span> <span class="m">1</span><span class="p">/</span><span class="n">frameRate</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">frameIdx</span><span class="p">++;</span>
+            <span class="n">timer</span> <span class="p">-=</span> <span class="m">1</span><span class="p">/</span><span class="n">frameRate</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">looping</span><span class="p">)</span> <span class="n">frameIdx</span> <span class="p">%=</span> <span class="n">frames</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
+            <span class="k">else</span> <span class="n">frameIdx</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Min</span><span class="p">(</span><span class="n">frames</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">1</span><span class="p">,</span> <span class="n">frameIdx</span><span class="p">);</span>
+
+            <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">SpriteRenderer</span><span class="p">&gt;().</span><span class="n">sprite</span> <span class="p">=</span> <span class="n">frames</span><span class="p">[</span><span class="n">frameIdx</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3>Fly</h3>
 
 <p>Press a button you can fly.</p>
 
@@ -350,8 +374,8 @@ The thing should have a <code>Rigidbody2D</code> on it.</p>
     <span class="k">void</span> <span class="nf">Update</span> <span class="p">()</span> <span class="p">{</span>
         <span class="n">timer</span> <span class="p">-=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetButton</span><span class="p">(</span><span class="s">&quot;Fire1&quot;</span><span class="p">)</span> <span class="p">&amp;&amp;</span> <span class="n">timer</span> <span class="p">&lt;=</span> <span class="m">0f</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">GameObject</span> <span class="n">bullet</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span><span class="n">bulletPrefab</span><span class="p">)</span> <span class="k">as</span> <span class="n">GameObject</span><span class="p">;</span>
-            <span class="n">bullet</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">MovingAlong</span><span class="p">&gt;().</span><span class="n">movingDirection</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">&gt;</span> <span class="m">0</span> <span class="p">?</span> <span class="m">1</span> <span class="p">:</span> <span class="p">-</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+            <span class="n">GameObject</span> <span class="n">bullet</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span><span class="n">bulletPrefab</span><span class="p">,</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">,</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">)</span> <span class="k">as</span> <span class="n">GameObject</span><span class="p">;</span>
+            <span class="n">bullet</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">MovingAlong</span><span class="p">&gt;().</span><span class="n">movingDirection</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">localScale</span><span class="p">.</span><span class="n">x</span> <span class="p">&gt;</span> <span class="m">0</span> <span class="p">?</span> <span class="m">1</span> <span class="p">:</span> <span class="p">-</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
             <span class="n">timer</span> <span class="p">=</span> <span class="n">coolDown</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>

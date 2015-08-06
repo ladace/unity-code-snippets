@@ -154,6 +154,19 @@ You have to create a <strong>gameover scene</strong> and add it to your build se
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
+</code></pre></div>
+<h3>Win Area (Goal)</h3>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">WinArea</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+
+    <span class="k">void</span> <span class="nf">OnTriggerEnter</span> <span class="p">(</span><span class="n">Collider</span> <span class="n">collider</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">collider</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Player&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Application</span><span class="p">.</span><span class="n">LoadLevel</span><span class="p">(</span><span class="n">Application</span><span class="p">.</span><span class="n">loadedLevel</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>      
       </div>
       <footer class="site-footer">
