@@ -14,7 +14,7 @@ using UnityEngine;
 using System.Collections;
 
 public class PressButtonToGo : MonoBehaviour {
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetButtonDown ("Submit")) {
@@ -40,11 +40,32 @@ public class GameOver : MonoBehaviour {
 		Application.LoadLevel(levelIndex);
 		lastLevelIdx = levelIndex;
 	}
-	
+
 	void Update () {
 		if (Input.GetButtonDown ("Submit")) {
 			Application.LoadLevel(lastLevelIdx);
 		}
+	}
+}
+```
+
+### <a id="DestroyAfter">Destroy After A Certain Time</a>
+
+Destroy this object after a period of time.
+
+```csharp
+using UnityEngine;
+
+public class DestroyAfter : MonoBehaviour {
+
+	public float duration;
+
+	void Start () {
+		Invoke("_Destroy", duration);
+	}
+
+	void _Destroy () {
+		Destroy(gameObject);
 	}
 }
 ```
