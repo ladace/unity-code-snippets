@@ -103,6 +103,7 @@ public class PlayerAnimation : MonoBehaviour {
 
 		if (animationTimer > 1/frameRate) {
 			animationIdx++;
+			animationTimer -= 1/frameRate;
 			if (currentAnimation == walkingFrames) animationIdx %= walkingFrames.Length;
 			else animationIdx = Mathf.Min(animationIdx, currentAnimation.Length - 1);
 
@@ -111,8 +112,32 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 }
 ```
+### Frame Animation
 
-## Fly
+```csharp
+using UnityEngine;
+using System.Collections;
+
+public class FrameAnimation {
+	public Sprite[] frames;
+	public float frameRate;
+	public bool looping = true;
+	private float timer;
+	private int frameIdx;
+	void Update () {
+		timer += Time.deltaTime;
+		if (timer > 1/frameRate) {
+			frameIdx++;
+			timer -= 1/frameRate;
+			if (looping) frameIdx %= frames.Length;
+			else frameIdx = Mathf.Min(frames.Length - 1, frameIdx);
+		
+			GetComponent<SpriteRenderer>().sprite = frames[frameIdx];
+		}
+	}
+}
+```
+### Fly
 
 Press a button you can fly.
 
@@ -379,8 +404,8 @@ public class Shooting : MonoBehaviour {
 	void Update () {
 		timer -= Time.deltaTime;
 		if (Input.GetButton("Fire1") && timer <= 0f) {
-			GameObject bullet = Instantiate(bulletPrefab) as GameObject;
-			bullet.GetComponent<MovingAlong>().movingDirection = new Vector2(transform.localScale > 0 ? 1 : -1, 0);
+			GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity) as GameObject;
+			bullet.GetComponent<MovingAlong>().movingDirection = new Vector2(transform.localScale.x > 0 ? 1 : -1, 0);
 			timer = coolDown;
 		}
 	}
