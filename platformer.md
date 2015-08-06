@@ -399,13 +399,14 @@ using System.Collections;
 public class Shooting : MonoBehaviour {
 	public GameObject bulletPrefab;
 	public float coolDown = 0.3f;
+	public float bulletSpeed = 1;
 	private float timer = 0f;
 
 	void Update () {
 		timer -= Time.deltaTime;
 		if (Input.GetButton("Fire1") && timer <= 0f) {
 			GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity) as GameObject;
-			bullet.GetComponent<MovingAlong>().movingDirection = new Vector2(transform.localScale.x > 0 ? 1 : -1, 0);
+			bullet.GetComponent<MovingAlong>().movingDirection = new Vector2(transform.localScale.x > 0 ? bulletSpeed : -bulletSpeed, 0);
 			timer = coolDown;
 		}
 	}
