@@ -449,7 +449,7 @@ public class Spawner : MonoBehaviour {
 	public GameObject prefab;
 	public float interval;
 
-	public Start () {
+	public void Start () {
 		StartCoroutine(SpawnRoutine());
 	}
 
