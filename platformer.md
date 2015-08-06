@@ -380,7 +380,7 @@ public class Shooting : MonoBehaviour {
 		timer -= Time.deltaTime;
 		if (Input.GetButton("Fire1") && timer <= 0f) {
 			GameObject bullet = Instantiate(bulletPrefab) as GameObject;
-			bullet.GetComponent<MovingAlong>().movingDirection = new Vector2(transform.localScale > 0 ? 1 : -1, 0);
+			bullet.GetComponent<MovingAlong>().movingDirection = new Vector2(transform.localScale.x > 0 ? 1 : -1, 0);
 			timer = coolDown;
 		}
 	}
