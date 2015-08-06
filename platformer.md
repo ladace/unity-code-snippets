@@ -386,3 +386,26 @@ public class Shooting : MonoBehaviour {
 	}
 }
 ```
+
+### Killable
+
+For enemy that could be killed by bullets.
+
+The bullet must be tagged "Bullet" and has a collider on it.
+
+
+```csharp
+using UnityEngine;
+
+public class Killable : MonoBehaviour {
+	public int hp;
+	void OnCollisionEnter2D (Collision2D collision) {
+		if (collision.collider.tag == "Bullet") {
+			hp--;
+			Destroy(collision.collider.gameObject);
+			if (hp <= 0) {
+				Destroy(gameObject);
+			}
+		}
+	}
+}
