@@ -118,7 +118,7 @@ public class PlayerAnimation : MonoBehaviour {
 using UnityEngine;
 using System.Collections;
 
-public class FrameAnimation {
+public class FrameAnimation : MonoBehaviour {
 	public Sprite[] frames;
 	public float frameRate;
 	public bool looping = true;
