@@ -106,6 +106,7 @@ public class PlayerAnimation : MonoBehaviour {
 			animationTimer -= 1/frameRate;
 			if (currentAnimation == walkingFrames) animationIdx %= walkingFrames.Length;
 			else animationIdx = Mathf.Min(animationIdx, currentAnimation.Length - 1);
+			if (velocity.x >= -0.01f && velocity.x <= 0.01f && currentAnimation == walkingFrames) animationIdx = 0; 
 
 			GetComponent<SpriteRenderer>().sprite = currentAnimation[animationIdx];
 		}
