@@ -8,6 +8,8 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/jquery.toc.js"></script>
   </head>
   <body>
     <section class="page-header">
@@ -19,20 +21,25 @@
     </section>
 
     <section class="main-content">
-      <large><a href="/unity-code-snippets/">Goto Home</a></large>
-      <h1>Guide</h1>
+      <nav style="margin-bottom: 20px">
+        <large><a href="/unity-code-snippets/">Goto Home</a></large>
+      </nav>
+      <div id="content">
+        <h1>Guide</h1>
 
 <ul>
 <li><a href="build.html">How to Build the Game</a></li>
 </ul>
 
-<h1>Category</h1>
+<h1>Snippets</h1>
 
 <ul>
+<li><a href="general.html">General</a></li>
 <li><a href="platformer.html">Platformer</a></li>
+<li><a href="3d.html">3D Game</a></li>
 </ul>
 
-<h1>Code Snippets</h1>
+<h1>How To Use</h1>
 
 <p><strong>To use these scripts, you must create a script that has the same name as the class name (which is the word after <code>class</code> word.</strong></p>
 
@@ -46,171 +53,8 @@
 <p>You have to create a file called <code>MyClassName</code>, otherwise you can change the word after <code>class</code> to the name of the file.</p>
 
 <p><strong>The file name must be the same as the class name.</strong></p>
-
-<h3>Press button to enter the game in title screen</h3>
-
-<p>Create an empty object in your title screen and attach this script.
-Replace &quot;Game&quot; with whatever you name for your game level (in double quotes).</p>
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
-
-<span class="k">public</span> <span class="k">class</span> <span class="nc">Title</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
-
-    <span class="c1">// Update is called once per frame</span>
-    <span class="k">void</span> <span class="nf">Update</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetButtonDown</span> <span class="p">(</span><span class="s">&quot;Submit&quot;</span><span class="p">))</span> <span class="p">{</span>
-            <span class="n">Application</span><span class="p">.</span><span class="n">LoadLevel</span> <span class="p">(</span><span class="s">&quot;Game&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3>Activate/Deactivate a object on clicking a collider</h3>
-
-<p>Attach the following script to a object that has at least one collider.
-Assign <code>theObject</code> with the object you want to activate/deactivate.</p>
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
-
-<span class="k">public</span> <span class="k">class</span> <span class="nc">Switch</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
-
-    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">theObject</span><span class="p">;</span>
-
-    <span class="k">void</span> <span class="nf">OnMouseDown</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">theObject</span><span class="p">.</span><span class="n">activeSelf</span><span class="p">)</span>
-            <span class="n">theObject</span><span class="p">.</span><span class="n">SetActive</span> <span class="p">(</span><span class="k">false</span><span class="p">);</span>
-        <span class="k">else</span>
-            <span class="n">theObject</span><span class="p">.</span><span class="n">SetActive</span> <span class="p">(</span><span class="k">true</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3>Shooting</h3>
-
-<p>Assign a prefab as the archetype of bullets to the bullet field of this component.
-The bullet prefab needs to have a Rigidbody on it.</p>
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
-
-<span class="k">public</span> <span class="k">class</span> <span class="nc">Shooter</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
-
-    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">bulletPrefab</span><span class="p">;</span>
-    <span class="k">public</span> <span class="kt">float</span> <span class="n">bulletSpeed</span><span class="p">;</span>
-
-    <span class="c1">// Update is called once per frame</span>
-    <span class="k">void</span> <span class="nf">Update</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetButtonDown</span> <span class="p">(</span><span class="s">&quot;Fire1&quot;</span><span class="p">))</span> <span class="p">{</span>
-            <span class="n">Vector3</span> <span class="n">direction</span> <span class="p">=</span> <span class="n">GetComponentInChildren</span><span class="p">&lt;</span><span class="n">Camera</span><span class="p">&gt;().</span><span class="n">transform</span><span class="p">.</span><span class="n">TransformDirection</span><span class="p">(</span><span class="n">Vector3</span><span class="p">.</span><span class="n">forward</span><span class="p">);</span>
-            <span class="n">GameObject</span> <span class="n">obj</span> <span class="p">=</span> <span class="n">Instantiate</span> <span class="p">(</span><span class="n">bulletPrefab</span><span class="p">,</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">+</span> <span class="n">direction</span> <span class="p">*</span> <span class="m">2</span><span class="p">,</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">)</span> <span class="k">as</span> <span class="n">GameObject</span><span class="p">;</span>
-            <span class="n">obj</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Rigidbody</span><span class="p">&gt;().</span><span class="n">velocity</span> <span class="p">=</span> <span class="n">bulletSpeed</span> <span class="p">*</span> <span class="n">direction</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3>Encounter</h3>
-
-<p>Attach this to an object with a trigger (collider with <code>Is Trigger</code> toggled on).
-Assign an object to <code>blockerObject</code>. It will deactivate the object.</p>
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
-
-<span class="k">public</span> <span class="k">class</span> <span class="nc">Encounter</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
-    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">blockerObject</span><span class="p">;</span>
-
-    <span class="k">void</span> <span class="nf">OnTriggerEnter</span> <span class="p">(</span><span class="n">Collider</span> <span class="n">collider</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">collider</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Player&quot;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">blockerObject</span><span class="p">.</span><span class="n">SetActive</span> <span class="p">(</span><span class="k">false</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3>Object that keeps moving to a direction</h3>
-
-<p>It will check if the object has a Rigidbody. If so, use the Rigidbody component to move; otherwise just change the position of the Transform component.</p>
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
-
-<span class="k">public</span> <span class="k">class</span> <span class="nc">MovingAlong</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
-    <span class="k">public</span> <span class="n">Vector3</span> <span class="n">direction</span><span class="p">;</span>
-
-    <span class="k">void</span> <span class="nf">Update</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="n">Rigidbody</span> <span class="n">rd</span> <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Rigidbody</span><span class="p">&gt;</span> <span class="p">();</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">rd</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">+=</span> <span class="n">direction</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">;</span>
-        <span class="k">else</span>
-            <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Rigidbody</span><span class="p">&gt;</span> <span class="p">().</span><span class="n">velocity</span> <span class="p">=</span> <span class="n">direction</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3>object that moves to another object</h3>
-
-<p>Assign the <code>target</code> value with the actual target of the movement.</p>
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
-
-<span class="k">public</span> <span class="k">class</span> <span class="nc">MoveTo</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
-
-    <span class="k">public</span> <span class="n">Transform</span> <span class="n">target</span><span class="p">;</span>
-    <span class="k">public</span> <span class="kt">float</span> <span class="n">speed</span><span class="p">;</span>
-
-    <span class="k">void</span> <span class="nf">Update</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="n">Vector3</span><span class="p">.</span><span class="n">MoveTowards</span> <span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">,</span> <span class="n">target</span><span class="p">.</span><span class="n">position</span><span class="p">,</span> <span class="n">speed</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3>Killed by bullet</h3>
-
-<p>As soon as the object collides with a bullet tagged as &quot;Bullet&quot;, it is killed.</p>
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
-
-<span class="k">public</span> <span class="k">class</span> <span class="nc">FragileEnemy</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
-    <span class="k">void</span> <span class="nf">OnCollisionEnter</span> <span class="p">(</span><span class="n">Collision</span> <span class="n">collision</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">collision</span><span class="p">.</span><span class="n">collider</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Bullet&quot;</span><span class="p">)</span>
-            <span class="n">Destroy</span> <span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3>Touch and gameover</h3>
-
-<p>As soon as the object touches the player, load gameover level.</p>
-
-<p>The object should have a collider (not a trigger) on it.
-You have to create a <strong>gameover scene</strong> and add it to your build settings.</p>
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
-
-<span class="k">public</span> <span class="k">class</span> <span class="nc">Lethal</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
-    <span class="k">public</span> <span class="kt">string</span> <span class="n">gameoverSceneName</span><span class="p">;</span>
-    <span class="k">void</span> <span class="nf">OnCollisionEnter</span> <span class="p">(</span><span class="n">Collision</span> <span class="n">collision</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">collision</span><span class="p">.</span><span class="n">collider</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Player&quot;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">Application</span><span class="p">.</span><span class="n">LoadLevel</span> <span class="p">(</span><span class="n">gameoverSceneName</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3>Spawner</h3>
-
-<p>Spawns an object from <code>archetype</code> Prefab every <code>interval</code> seconds, at a random position inside a circle of <code>radius</code>.</p>
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
-
-<span class="k">public</span> <span class="k">class</span> <span class="nc">Spawner</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
-
-    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">archetype</span><span class="p">;</span>
-    <span class="k">public</span> <span class="kt">float</span> <span class="n">interval</span><span class="p">;</span>
-    <span class="k">public</span> <span class="kt">float</span> <span class="n">range</span><span class="p">;</span>
-
-    <span class="k">void</span> <span class="nf">Start</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="n">StartCoroutine</span> <span class="p">(</span><span class="n">SpawnRoutine</span> <span class="p">());</span>
-    <span class="p">}</span>
-
-    <span class="n">IEnumerator</span> <span class="nf">SpawnRoutine</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="k">while</span> <span class="p">(</span><span class="k">true</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nf">WaitForSeconds</span> <span class="p">(</span><span class="n">interval</span><span class="p">);</span>
-            <span class="n">Instantiate</span> <span class="p">(</span><span class="n">archetype</span><span class="p">,</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">+</span> <span class="n">Random</span><span class="p">.</span><span class="n">insideUnitSphere</span> <span class="p">*</span> <span class="n">range</span><span class="p">,</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+      
+      </div>
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/ladace/unity-code-snippets">Unity-code-snippets</a> is maintained by <a href="https://github.com/ladace">ladace</a>.</span>
 
@@ -218,6 +62,10 @@ You have to create a <strong>gameover scene</strong> and add it to your build se
       </footer>
 
     </section>
+
+    <script type="text/javascript">
+      $('#content').toc();
+    </script>
 
   
   </body>

@@ -2,12 +2,14 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Making a Platformer</title>
+    <title>Code for Making Platformers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/jquery.toc.js"></script>
   </head>
   <body>
     <section class="page-header">
@@ -19,8 +21,11 @@
     </section>
 
     <section class="main-content">
-      <large><a href="/unity-code-snippets/">Goto Home</a></large>
-      <h1>Making a Platformer</h1>
+      <nav style="margin-bottom: 20px">
+        <large><a href="/unity-code-snippets/">Goto Home</a></large>
+      </nav>
+      <div id="content">
+        <h1>Making a Platformer</h1>
 
 <h2>Character Movement</h2>
 
@@ -39,11 +44,13 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<h3>Character Movement with Jumping</h3>
+<h2>Character Movement with Jumping</h2>
 
 <p>Attach it to the player object, who must have a <code>Rigidbody2D</code> on it.</p>
 
 <p>The player object should be set to a unique layer. Edit the <code>groundMask</code> and toggle every layer but the player layer.</p>
+
+<p><em>If you want the player to move constantly to the right/left, just replace <code>speed * Input.GetAxis(&quot;Horizontal&quot;)</code> with <code>speed</code> or <code>-speed</code>.</em></p>
 <div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
 
@@ -59,36 +66,86 @@
             <span class="k">new</span> <span class="nf">Vector2</span><span class="p">(</span><span class="n">speed</span> <span class="p">*</span> <span class="n">Input</span><span class="p">.</span><span class="n">GetAxis</span> <span class="p">(</span><span class="s">&quot;Horizontal&quot;</span><span class="p">),</span> <span class="n">oldY</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetButtonDown</span> <span class="p">(</span><span class="s">&quot;Jump&quot;</span><span class="p">))</span> <span class="p">{</span>
-            <span class="c1">// check if the player is on ground</span>
-            <span class="n">BoxCollider2D</span> <span class="n">col</span> <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">BoxCollider2D</span><span class="p">&gt;</span> <span class="p">();</span>
-            <span class="n">Vector2</span> <span class="n">scale</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span><span class="p">;</span>
-            <span class="n">RaycastHit2D</span> <span class="n">res</span> <span class="p">=</span> <span class="n">Physics2D</span><span class="p">.</span><span class="n">BoxCast</span> <span class="p">((</span><span class="n">Vector2</span><span class="p">)</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">+</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">Scale</span> <span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">col</span><span class="p">.</span><span class="n">offset</span><span class="p">),</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">Scale</span> <span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">col</span><span class="p">.</span><span class="n">size</span><span class="p">),</span>
-                               <span class="n">transform</span><span class="p">.</span><span class="n">rotation</span><span class="p">.</span><span class="n">eulerAngles</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">down</span><span class="p">,</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Infinity</span><span class="p">,</span> <span class="n">groundMask</span><span class="p">);</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">collider</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">res</span><span class="p">.</span><span class="n">distance</span> <span class="p">&lt;=</span> <span class="m">0.02f</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// if the player is on ground</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">OnGround</span><span class="p">())</span>
                 <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Rigidbody2D</span><span class="p">&gt;().</span><span class="n">velocity</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">speed</span> <span class="p">*</span> <span class="n">Input</span><span class="p">.</span><span class="n">GetAxis</span> <span class="p">(</span><span class="s">&quot;Horizontal&quot;</span><span class="p">),</span> <span class="n">jumpSpeed</span><span class="p">);</span>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}</span>
+
+    <span class="k">public</span> <span class="kt">bool</span> <span class="nf">OnGround</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">BoxCollider2D</span> <span class="n">col</span> <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">BoxCollider2D</span><span class="p">&gt;</span> <span class="p">();</span>
+        <span class="n">Vector2</span> <span class="n">scale</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span><span class="p">;</span>
+        <span class="n">RaycastHit2D</span> <span class="n">res</span> <span class="p">=</span> <span class="n">Physics2D</span><span class="p">.</span><span class="n">BoxCast</span> <span class="p">((</span><span class="n">Vector2</span><span class="p">)</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">+</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">Scale</span> <span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">col</span><span class="p">.</span><span class="n">offset</span><span class="p">),</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">Scale</span> <span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">col</span><span class="p">.</span><span class="n">size</span><span class="p">),</span>
+                                            <span class="n">transform</span><span class="p">.</span><span class="n">rotation</span><span class="p">.</span><span class="n">eulerAngles</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">down</span><span class="p">,</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Infinity</span><span class="p">,</span> <span class="n">groundMask</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="n">res</span><span class="p">.</span><span class="n">collider</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">res</span><span class="p">.</span><span class="n">distance</span> <span class="p">&lt;=</span> <span class="m">0.02f</span><span class="p">;</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2>Spikes</h2>
+<h2>Player Animation</h2>
 
-<h3>Elementary</h3>
-
-<p>Destroying the player object:</p>
+<p>The animation script must be used with the newest <code>Player</code> script.</p>
 <div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
 
-<span class="k">public</span> <span class="k">class</span> <span class="nc">Lethal</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
-    <span class="k">void</span> <span class="nf">OnTriggerEnter2D</span> <span class="p">(</span><span class="n">Collider2D</span> <span class="n">collider</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">collider</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Player&quot;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">Destroy</span><span class="p">(</span><span class="n">collider</span><span class="p">.</span><span class="n">gameObject</span><span class="p">);</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">PlayerAnimation</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+
+    <span class="k">public</span> <span class="n">Sprite</span><span class="p">[]</span> <span class="n">walkingFrames</span><span class="p">;</span>
+    <span class="k">public</span> <span class="n">Sprite</span><span class="p">[]</span> <span class="n">jumpingFrames</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">frameRate</span> <span class="p">=</span> <span class="m">5</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">float</span> <span class="n">animationTimer</span> <span class="p">=</span> <span class="m">0f</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">animationIdx</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">Sprite</span><span class="p">[]</span> <span class="n">currentAnimation</span><span class="p">;</span>
+
+    <span class="k">void</span> <span class="nf">Update</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">Vector2</span> <span class="n">velocity</span> <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Rigidbody2D</span><span class="p">&gt;().</span><span class="n">velocity</span><span class="p">;</span>
+        <span class="c1">// flip the player</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">velocity</span><span class="p">.</span><span class="n">x</span> <span class="p">&gt;</span> <span class="m">0</span> <span class="p">&amp;&amp;</span> <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span><span class="p">.</span><span class="n">x</span> <span class="p">&lt;</span> <span class="m">0</span> <span class="p">||</span> <span class="n">velocity</span><span class="p">.</span><span class="n">x</span> <span class="p">&lt;</span> <span class="m">0</span> <span class="p">&amp;&amp;</span> <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span><span class="p">.</span><span class="n">x</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span>
+            <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span><span class="p">.</span><span class="n">Set</span><span class="p">(-</span><span class="n">transform</span><span class="p">.</span><span class="n">localScale</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">transform</span><span class="p">.</span><span class="n">localScale</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+        <span class="c1">// play the animation</span>
+        <span class="n">Sprite</span><span class="p">[]</span> <span class="n">frames</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Player</span><span class="p">&gt;().</span><span class="n">OnGround</span><span class="p">())</span> <span class="n">frames</span> <span class="p">=</span> <span class="n">walkingFrames</span><span class="p">;</span>
+        <span class="k">else</span> <span class="n">frames</span> <span class="p">=</span> <span class="n">jumpingFrames</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">currentAnimation</span> <span class="p">!=</span> <span class="n">frames</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">currentAnimation</span> <span class="p">=</span> <span class="n">frames</span><span class="p">;</span>
+            <span class="n">animationIdx</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">animationTimer</span> <span class="p">+=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">animationTimer</span> <span class="p">&gt;</span> <span class="m">1</span><span class="p">/</span><span class="n">frameRate</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">animationIdx</span><span class="p">++;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">currentAnimation</span> <span class="p">==</span> <span class="n">walkingFrames</span><span class="p">)</span> <span class="n">animationIdx</span> <span class="p">%=</span> <span class="n">walkingFrames</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
+            <span class="k">else</span> <span class="n">animationIdx</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Min</span><span class="p">(</span><span class="n">animationIdx</span><span class="p">,</span> <span class="n">currentAnimation</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">1</span><span class="p">);</span>
+
+            <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">SpriteRenderer</span><span class="p">&gt;().</span><span class="n">sprite</span> <span class="p">=</span> <span class="n">currentAnimation</span><span class="p">[</span><span class="n">animationIdx</span><span class="p">];</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Or loading the loaded level</p>
+<h2>Fly</h2>
+
+<p>Press a button you can fly.</p>
+
+<p>The script uses &quot;Fire1&quot; button in the input manager. Customize the button in the input manager.</p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Fly</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">flySpeed</span><span class="p">;</span>
+
+    <span class="k">void</span> <span class="nf">Update</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetButtonDown</span><span class="p">(</span><span class="s">&quot;Fire1&quot;</span><span class="p">))</span> <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">rb</span> <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Rigidbody2D</span><span class="p">&gt;();</span>
+            <span class="n">rb</span><span class="p">.</span><span class="n">velocity</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">rb</span><span class="p">.</span><span class="n">velocity</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">flySpeed</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2>Spikes Or Other Lethal Objects</h2>
+
+<p>When the player hit the spike, restart the whole level:</p>
 <div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
 
@@ -100,18 +157,227 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Or loading the gameover screen.</p>
+<p>If you want the game to load gameover screen, replace <code>Application.LoadLevel(Application.loadedLevel)</code> with <code>Application.LoadLevel(&quot;WhateverGameOverSceneNameHere&quot;)</code>.</p>
+
+<h2>Coins</h2>
+
+<p>When the player hit the coin, add one score.</p>
+
+<p>You need to declare score variable in player script, put this line: <code>public int score;</code> in the player class.</p>
 <div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
 
-<span class="k">public</span> <span class="k">class</span> <span class="nc">Lethal</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Coin</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
     <span class="k">void</span> <span class="nf">OnTriggerEnter2D</span> <span class="p">(</span><span class="n">Collider2D</span> <span class="n">collider</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">collider</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Player&quot;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">Application</span><span class="p">.</span><span class="n">LoadLevel</span><span class="p">(</span><span class="s">&quot;GameOver&quot;</span><span class="p">);</span>
+            <span class="n">collider</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Player</span><span class="p">&gt;().</span><span class="n">score</span><span class="p">++;</span>
+            <span class="n">Destroy</span> <span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+<p>If the player script doesn&#39;t have <code>score</code> declared, the script will not run.</p>
+
+<h3>Play Sound When Getting Coins</h3>
+
+<p>Insert <code>coinSound</code> member variable. i.e:</p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="p">...</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Coin</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="n">AudioClip</span> <span class="n">coinSound</span><span class="p">;</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Ensure player has an <code>AudioSource</code> component. Then play the sound when player gets the coin:</p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp">    <span class="p">...</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">collider</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Player&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">collider</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">AudioSource</span><span class="p">&gt;().</span><span class="n">PlayOneShot</span> <span class="p">(</span><span class="n">coinSound</span><span class="p">);</span>
+        <span class="n">collider</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Player</span><span class="p">&gt;().</span><span class="n">score</span><span class="p">++;</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+    <span class="p">...</span>
+</code></pre></div>
+<p><strong>You can use this approach to create FX for other events in game.</strong></p>
+
+<h3>Create An FX When Getting Coins</h3>
+
+<p>Use <code>Instantiate</code> to create the FX object from a prefab in the same place. You have to add a member variable to hold the prefab, and create the object when player gets the coin.</p>
+
+<p>You also need to create the effect in Unity Editor and make it a prefab. The effect can be any game object, such as particle effects and even a UI object.</p>
+
+<p><strong>You probably need to attach <a href="general.html#DestroyAfter"><code>DestroyAfter</code></a> script to the FX object to destroy the FX after a certain time.</strong></p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="p">...</span>
+<span class="k">class</span> <span class="nc">Coin</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">fxPrefab</span><span class="p">;</span>
+    <span class="p">...</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">collider</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Player&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Instantiate</span><span class="p">(</span><span class="n">fxPrefab</span><span class="p">,</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">,</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+            <span class="p">...</span>
+        <span class="p">}</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>You can use this approach to create FX for other events in game.</strong></p>
+
+<h2><a id="MovingAlong">Moving Along a Direction</a></h2>
+
+<p>Attach it to anything you want to move. Set <code>movingDirection</code> in the editor.
+The thing should have a <code>Rigidbody2D</code> on it.</p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MovingAlong</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="n">Vector2</span> <span class="n">movingDirection</span><span class="p">;</span>
+    <span class="k">void</span> <span class="nf">Update</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Rigidbody2D</span><span class="p">&gt;().</span><span class="n">velocity</span> <span class="p">=</span> <span class="n">movingDirection</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2>Show score</h2>
+
+<p>Insert this function to <code>Player</code>, and <code>Player</code> should have a <code>score</code> variable.</p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp">    <span class="k">void</span> <span class="nf">OnGUI</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">GUI</span><span class="p">.</span><span class="n">Label</span> <span class="p">(</span><span class="k">new</span> <span class="n">Rect</span> <span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">110</span><span class="p">,</span> <span class="m">30</span><span class="p">),</span> <span class="s">&quot;Score: &quot;</span> <span class="p">+</span> <span class="n">score</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+    <span class="p">}</span>
+</code></pre></div>
+<h2>Win (Goal) Area</h2>
+
+<p>Attach it to an object that has a trigger 2D.</p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">WinArea</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+    <span class="k">void</span> <span class="nf">OnTriggerEnter2D</span> <span class="p">(</span><span class="n">Collider2D</span> <span class="n">collider</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">collider</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Player&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Application</span><span class="p">.</span><span class="n">LoadLevel</span> <span class="p">(</span><span class="n">Application</span><span class="p">.</span><span class="n">loadedLevel</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>If you want the player wins only if he has a score higher than a value, do a check before load the level, i.e <code>if (collider.GetComponent&lt;Player&gt;().score &gt;= 3) Application.LoadLevel (Application.loadedLevel + 1);</code>. The code looks like:</p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp">        <span class="p">...</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">collider</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Player&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">collider</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Player</span><span class="p">&gt;().</span><span class="n">score</span> <span class="p">&gt;=</span> <span class="m">3</span><span class="p">)</span>
+                <span class="n">Application</span><span class="p">.</span><span class="n">LoadLevel</span> <span class="p">(</span><span class="n">Application</span><span class="p">.</span><span class="n">loadedLevel</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="p">...</span>
+</code></pre></div>
+<h2>Enemy Following the Player</h2>
+
+<p>The enemy should have <code>Rigidbody2D</code> on it and the player must be tagged &quot;Player&quot;.</p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">EnemyFollow</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">speed</span><span class="p">;</span>
+
+    <span class="k">void</span> <span class="nf">Update</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">GameObject</span> <span class="n">player</span> <span class="p">=</span> <span class="n">GameObject</span><span class="p">.</span><span class="n">FindWithTag</span> <span class="p">(</span><span class="s">&quot;Player&quot;</span><span class="p">);</span>
+        <span class="kt">float</span> <span class="n">dx</span> <span class="p">=</span> <span class="n">player</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="p">-</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+        <span class="n">Vector2</span> <span class="n">oldV</span> <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Rigidbody2D</span><span class="p">&gt;().</span><span class="n">velocity</span><span class="p">;</span>
+        <span class="n">oldV</span><span class="p">.</span><span class="n">x</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Clamp</span> <span class="p">(</span><span class="n">dx</span> <span class="p">/</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">,</span> <span class="p">-</span><span class="n">speed</span><span class="p">,</span> <span class="n">speed</span><span class="p">);</span>
+        <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Rigidbody2D</span><span class="p">&gt;</span> <span class="p">().</span><span class="n">velocity</span> <span class="p">=</span> <span class="n">oldV</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2>Camera Follow 2D</h2>
+
+<p>To use this, you camera should not be a child of the player.
+<code>target</code> should be assigned as player.</p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CameraFollow2D</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+
+    <span class="k">public</span> <span class="n">Transform</span> <span class="n">target</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">speed</span><span class="p">;</span>
+
+    <span class="k">void</span> <span class="nf">Update</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">Vector2</span> <span class="n">newPos</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">MoveTowards</span> <span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">,</span> <span class="n">target</span><span class="p">.</span><span class="n">position</span><span class="p">,</span> <span class="n">speed</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">);</span>
+        <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="n">newPos</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">newPos</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2>Checkpoints</h2>
+
+<p>The checkpoint will record the player position. Replace <code>Checkpoint.RestartFromCheckpoint()</code> with <code>Application.LoadLevel(Application.loadedLevel)</code> in the death code. The checkpoint cannot work with a gameover screen for now.</p>
+
+<p>Use <code>order</code> for the priority of different checkpoints. Checkpoints with a bigger order are supposed to mean more progress in game, so when player backtracks he won&#39;t activate earlier checkpoints.</p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Checkpoint</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+
+    <span class="k">static</span> <span class="k">private</span> <span class="n">Checkpoint</span> <span class="n">activeCheckpoint</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">order</span><span class="p">;</span>
+
+    <span class="k">void</span> <span class="nf">OnTriggerEnter2D</span> <span class="p">(</span><span class="n">Collider2D</span> <span class="n">collider</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">collider</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Player&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">activeCheckpoint</span> <span class="p">==</span> <span class="k">null</span> <span class="p">||</span> <span class="k">this</span><span class="p">.</span><span class="n">order</span> <span class="p">&gt;=</span> <span class="n">activeCheckpoint</span><span class="p">.</span><span class="n">order</span><span class="p">)</span>
+                <span class="n">activeCheckpoint</span> <span class="p">=</span> <span class="k">this</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="nf">OnLevelWasLoaded</span> <span class="p">(</span><span class="kt">int</span> <span class="n">level</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">GameObject</span><span class="p">.</span><span class="n">FindWithTag</span><span class="p">(</span><span class="s">&quot;Player&quot;</span><span class="p">).</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+        <span class="n">Destroy</span><span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="k">public</span> <span class="k">void</span> <span class="nf">RestartFromCheckpoint</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">activeCheckpoint</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Object</span><span class="p">.</span><span class="n">DontDestroyOnLoad</span><span class="p">(</span><span class="n">activeCheckpoint</span><span class="p">.</span><span class="n">gameObject</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">Application</span><span class="p">.</span><span class="n">LoadLevel</span><span class="p">(</span><span class="n">Application</span><span class="p">.</span><span class="n">loadedLevel</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2>Shooting</h2>
+
+<p>Make a bullet prefab. Ensure the bullet has <a href="#MovingAlong"><code>MovingAlong</code></a> component.</p>
+
+<p>Attach this script to the player.</p>
+
+<p>The script uses &quot;Fire1&quot; button in the input manager. Customize the button in the input manager.</p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Shooting</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">bulletPrefab</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">coolDown</span> <span class="p">=</span> <span class="m">0.3f</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">float</span> <span class="n">timer</span> <span class="p">=</span> <span class="m">0f</span><span class="p">;</span>
+
+    <span class="k">void</span> <span class="nf">Update</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">timer</span> <span class="p">-=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetButton</span><span class="p">(</span><span class="s">&quot;Fire1&quot;</span><span class="p">)</span> <span class="p">&amp;&amp;</span> <span class="n">timer</span> <span class="p">&lt;=</span> <span class="m">0f</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">GameObject</span> <span class="n">bullet</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span><span class="n">bulletPrefab</span><span class="p">)</span> <span class="k">as</span> <span class="n">GameObject</span><span class="p">;</span>
+            <span class="n">bullet</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">MovingAlong</span><span class="p">&gt;().</span><span class="n">movingDirection</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">&gt;</span> <span class="m">0</span> <span class="p">?</span> <span class="m">1</span> <span class="p">:</span> <span class="p">-</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+            <span class="n">timer</span> <span class="p">=</span> <span class="n">coolDown</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2>Killable</h2>
+
+<p>For enemy that could be killed by bullets.</p>
+
+<p>The bullet must be tagged &quot;Bullet&quot; and has a collider on it.</p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Killable</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">hp</span><span class="p">;</span>
+    <span class="k">void</span> <span class="nf">OnCollisionEnter2D</span> <span class="p">(</span><span class="n">Collision2D</span> <span class="n">collision</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">collision</span><span class="p">.</span><span class="n">collider</span><span class="p">.</span><span class="n">tag</span> <span class="p">==</span> <span class="s">&quot;Bullet&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">hp</span><span class="p">--;</span>
+            <span class="n">Destroy</span><span class="p">(</span><span class="n">collision</span><span class="p">.</span><span class="n">collider</span><span class="p">.</span><span class="n">gameObject</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">hp</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">Destroy</span><span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>      
+      </div>
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/ladace/unity-code-snippets">Unity-code-snippets</a> is maintained by <a href="https://github.com/ladace">ladace</a>.</span>
 
@@ -119,6 +385,10 @@
       </footer>
 
     </section>
+
+    <script type="text/javascript">
+      $('#content').toc();
+    </script>
 
   
   </body>

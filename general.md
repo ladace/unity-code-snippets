@@ -2,7 +2,9 @@
 title: General Code
 ---
 
-### Press Button To A Certain Scene
+# Code For General Usage
+
+## Press Button To A Certain Scene
 
 **Could be used in the title scene, game over scene.**
 
@@ -24,7 +26,7 @@ public class PressButtonToGo : MonoBehaviour {
 }
 ```
 
-### Go Back To Last Scene
+## Go Back To Last Scene
 
 **Important: In `Lethal` and other scripts which load a gameover screen, replace `Application.LoadLevel` with `GameOver.LoadLevel`.**
 
@@ -54,7 +56,7 @@ public class GameOver : MonoBehaviour {
 }
 ```
 
-### <a id="DestroyAfter">Destroy After A Certain Time</a>
+## <a id="DestroyAfter">Destroy After A Certain Time</a>
 
 Destroy this object after a period of time.
 
@@ -75,7 +77,7 @@ public class DestroyAfter : MonoBehaviour {
 }
 ```
 
-### Activate/Deactivate a object on clicking a collider
+## Activate/Deactivate a object on clicking a collider
 
 Attach the following script to a object that has at least one collider.
 Assign `theObject` with the object you want to activate/deactivate.

@@ -4,7 +4,7 @@ title: Code for Making Platformers
 
 # Making a Platformer
 
-### Character Movement
+## Character Movement
 
 Attach it to the player, who must have a `Rigidbody2D` on it.
 
@@ -25,7 +25,7 @@ public class Player : MonoBehaviour {
 
 ```
 
-### Character Movement with Jumping
+## Character Movement with Jumping
 
 Attach it to the player object, who must have a `Rigidbody2D` on it.
 
@@ -66,7 +66,7 @@ public class Player : MonoBehaviour {
 }
 ```
 
-### Player Animation
+## Player Animation
 
 The animation script must be used with the newest `Player` script.
 
@@ -112,7 +112,7 @@ public class PlayerAnimation : MonoBehaviour {
 }
 ```
 
-### Fly
+## Fly
 
 Press a button you can fly.
 
@@ -133,7 +133,7 @@ public class Fly : MonoBehaviour {
 }
 ```
 
-### Spikes Or Other Lethal Objects
+## Spikes Or Other Lethal Objects
 
 When the player hit the spike, restart the whole level:
 
@@ -152,7 +152,7 @@ public class Lethal : MonoBehaviour {
 
 If you want the game to load gameover screen, replace `Application.LoadLevel(Application.loadedLevel)` with `Application.LoadLevel("WhateverGameOverSceneNameHere")`.
 
-### Coins
+## Coins
 
 When the player hit the coin, add one score.
 
@@ -174,7 +174,7 @@ public class Coin : MonoBehaviour {
 
 If the player script doesn't have `score` declared, the script will not run.
 
-#### Play Sound When Getting Coins
+### Play Sound When Getting Coins
 
 Insert `coinSound` member variable. i.e:
 
@@ -200,7 +200,7 @@ Ensure player has an `AudioSource` component. Then play the sound when player ge
 
 **You can use this approach to create FX for other events in game.**
 
-#### Create An FX When Getting Coins
+### Create An FX When Getting Coins
 
 Use `Instantiate` to create the FX object from a prefab in the same place. You have to add a member variable to hold the prefab, and create the object when player gets the coin.
 
@@ -225,7 +225,7 @@ class Coin : MonoBehaviour {
 **You can use this approach to create FX for other events in game.**
 
 
-### <a id="MovingAlong">Moving Along a Direction</a>
+## <a id="MovingAlong">Moving Along a Direction</a>
 
 Attach it to anything you want to move. Set `movingDirection` in the editor.
 The thing should have a `Rigidbody2D` on it.
@@ -242,7 +242,7 @@ public class MovingAlong : MonoBehaviour {
 }
 ```
 
-### Show score
+## Show score
 
 Insert this function to `Player`, and `Player` should have a `score` variable.
 
@@ -252,7 +252,7 @@ Insert this function to `Player`, and `Player` should have a `score` variable.
 	}
 ```
 
-### Win (Goal) Area
+## Win (Goal) Area
 
 Attach it to an object that has a trigger 2D.
 
@@ -280,7 +280,7 @@ If you want the player wins only if he has a score higher than a value, do a che
 		...
 ```
 
-### Enemy Following the Player
+## Enemy Following the Player
 
 The enemy should have `Rigidbody2D` on it and the player must be tagged "Player".
 
@@ -302,7 +302,7 @@ public class EnemyFollow : MonoBehaviour {
 }
 ```
 
-### Camera Follow 2D
+## Camera Follow 2D
 
 To use this, you camera should not be a child of the player.
 `target` should be assigned as player.
@@ -323,7 +323,7 @@ public class CameraFollow2D : MonoBehaviour {
 }
 ```
 
-### Checkpoints
+## Checkpoints
 
 The checkpoint will record the player position. Replace `Checkpoint.RestartFromCheckpoint()` with `Application.LoadLevel(Application.loadedLevel)` in the death code. The checkpoint cannot work with a gameover screen for now.
 
@@ -359,7 +359,7 @@ public class Checkpoint : MonoBehaviour {
 }
 ```
 
-### Shooting
+## Shooting
 
 Make a bullet prefab. Ensure the bullet has [`MovingAlong`](#MovingAlong) component.
 
@@ -387,7 +387,7 @@ public class Shooting : MonoBehaviour {
 }
 ```
 
-### Killable
+## Killable
 
 For enemy that could be killed by bullets.
 
