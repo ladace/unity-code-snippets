@@ -112,6 +112,27 @@ public class PlayerAnimation : MonoBehaviour {
 }
 ```
 
+### Fly
+
+Press a button you can fly.
+
+The script uses "Fire1" button in the input manager. Customize the button in the input manager.
+
+```csharp
+using UnityEngine;
+public class Fly : MonoBehaviour {
+
+	public float flySpeed;
+
+	void Update () {
+		if (Input.GetButtonDown("Fire1")) {
+			var rb = GetComponent<Rigidbody2D>();
+			rb.velocity = new Vector2(rb.velocity.x, flySpeed);
+		}
+	}
+}
+```
+
 ### Spikes Or Other Lethal Objects
 
 When the player hit the spike, restart the whole level:
@@ -204,16 +225,16 @@ class Coin : MonoBehaviour {
 **You can Use this approach to create FX for other events in game.**
 
 
-### Moving Enemy
+### <a id="MovingAlong">Moving Along a Direction</a>
 
 Attach it to anything you want to move. Set `movingDirection` in the editor.
-The enemy should have a `Rigidbody2D` on it.
+The thing should have a `Rigidbody2D` on it.
 
 ```csharp
 using UnityEngine;
 using System.Collections;
 
-public class MovingEnemy : MonoBehaviour {
+public class MovingAlong : MonoBehaviour {
 	public Vector2 movingDirection;
 	void Update () {
 		GetComponent<Rigidbody2D>().velocity = movingDirection;
@@ -298,6 +319,70 @@ public class CameraFollow2D : MonoBehaviour {
 	void Update () {
 		Vector2 newPos = Vector2.MoveTowards (transform.position, target.position, speed * Time.deltaTime);
 		transform.position = new Vector3(newPos.x, newPos.y, transform.position.z);
+	}
+}
+```
+
+### Checkpoints
+
+The checkpoint will record the player position. Replace `Checkpoint.RestartFromCheckpoint()` with `Application.LoadLevel(Application.loadedLevel)` in the death code. The checkpoint cannot work with a gameover screen for now.
+
+Use `order` for the priority of different checkpoints. Checkpoints with a bigger order are supposed to mean more progress in game, so when player backtracks he won't activate earlier checkpoints.
+
+```csharp
+using UnityEngine;
+using System.Collections;
+
+public class Checkpoint : MonoBehaviour {
+
+	static private Checkpoint activeCheckpoint;
+	public int order;
+
+	void OnTriggerEnter2D (Collider2D collider) {
+		if (collider.tag == "Player") {
+			if (activeCheckpoint == null || this.order >= activeCheckpoint.order)
+				activeCheckpoint = this;
+		}
+	}
+
+	void OnLevelWasLoaded (int level) {
+		GameObject.FindWithTag("Player").transform.position = transform.position;
+		Destroy(gameObject);
+	}
+
+	static public void RestartFromCheckpoint () {
+		if (activeCheckpoint != null) {
+			Object.DontDestroyOnLoad(activeCheckpoint.gameObject);
+		}
+		Application.LoadLevel(Application.loadedLevel);
+	}
+}
+```
+
+### Shooting
+
+Make a bullet prefab. Ensure the bullet has [`MovingAlong`](#MovingAlong) component.
+
+Attach this script to the player.
+
+The script uses "Fire1" button in the input manager. Customize the button in the input manager.
+
+```csharp
+using UnityEngine;
+using System.Collections;
+
+public class Shooting : MonoBehaviour {
+	public GameObject bulletPrefab;
+	public float coolDown = 0.3f;
+	private float timer = 0f;
+
+	void Update () {
+		timer -= Time.deltaTime;
+		if (Input.GetButton("Fire1") && timer <= 0f) {
+			GameObject bullet = Instantiate(bulletPrefab) as GameObject;
+			bullet.GetComponent<MovingAlong>().movingDirection = new Vector2(transform.localScale > 0 ? 1 : -1, 0);
+			timer = coolDown;
+		}
 	}
 }
 ```
