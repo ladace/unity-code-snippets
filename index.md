@@ -8,7 +8,7 @@ title: Unity Code Snippets
 
 # Snippets
 
- - [General](general.html)
+ - [General Usage](general.html)
  - [Platformer](platformer.html)
  - [3D Game](3d.html)
 
