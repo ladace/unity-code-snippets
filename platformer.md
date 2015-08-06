@@ -386,7 +386,7 @@ public class Checkpoint : MonoBehaviour {
 
 ## Shooting
 
-Make a bullet prefab. Ensure the bullet has [`MovingAlong`](#MovingAlong) component.
+Make a bullet prefab. Ensure the bullet has been attached [`MovingAlong`](#MovingAlong) script.
 
 Attach this script to the player.
 
