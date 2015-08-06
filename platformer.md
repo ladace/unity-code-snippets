@@ -372,8 +372,10 @@ public class Checkpoint : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded (int level) {
-		GameObject.FindWithTag("Player").transform.position = transform.position;
-		Destroy(gameObject);
+		if (activeCheckpoint == this) {
+			GameObject.FindWithTag("Player").transform.position = transform.position;
+			Destroy(gameObject);
+		}
 	}
 
 	static public void RestartFromCheckpoint () {
