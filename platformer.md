@@ -198,7 +198,7 @@ Ensure player has an `AudioSource` component. Then play the sound when player ge
 	...
 ```
 
-**You can Use this approach to create FX for other events in game.**
+**You can use this approach to create FX for other events in game.**
 
 #### Create An FX When Getting Coins
 
@@ -222,7 +222,7 @@ class Coin : MonoBehaviour {
 }
 ```
 
-**You can Use this approach to create FX for other events in game.**
+**You can use this approach to create FX for other events in game.**
 
 
 ### <a id="MovingAlong">Moving Along a Direction</a>
