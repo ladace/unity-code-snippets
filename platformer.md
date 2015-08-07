@@ -51,7 +51,6 @@ public class Player : MonoBehaviour {
 		if (Input.GetButtonDown ("Jump")) {
 			if (OnGround())
 				GetComponent<Rigidbody2D>().velocity = new Vector2(speed * Input.GetAxis ("Horizontal"), jumpSpeed);
-			}
 		}
 	}
 
