@@ -1,7 +1,7 @@
 ---
-title: How To Build
+title: Build the Game
 ---
-# How to Build a Game
+# Build the Game
 
 Assuming you have a scene file for gameplay, what you need to do is to create a title screen and link it to the main game.
 
@@ -18,7 +18,7 @@ Assuming you have a scene file for gameplay, what you need to do is to create a 
 		using System.Collections;
 
 		public class Title : MonoBehaviour {
-			
+
 			// Update is called once per frame
 			void Update () {
 				if (Input.GetButtonDown ("Submit")) {
@@ -33,4 +33,3 @@ Assuming you have a scene file for gameplay, what you need to do is to create a 
     3. Create an empty object in title screen and attach the code to it. (Add Component)
 3. Open each scene you want to include in the final build, and go to "File > Build Settings", click "Add Current" to add each scene to the settings. The title scene should always be the first scene in the build settings.
 3. Click build in Build Settings window.
-

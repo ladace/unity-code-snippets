@@ -400,7 +400,29 @@ The thing should have a <code>Rigidbody2D</code> on it.</p>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div>      
+</code></pre></div>
+<h2>Spawner</h2>
+
+<p>Spawn objects from a prefab around at a position.</p>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Spawner</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">prefab</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">interval</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">Start</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">StartCoroutine</span><span class="p">(</span><span class="n">SpawnRoutine</span><span class="p">());</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="n">IEnumerator</span> <span class="nf">SpawnRoutine</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">while</span> <span class="p">(</span><span class="k">true</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nf">WaitForSeconds</span><span class="p">(</span><span class="n">interval</span><span class="p">);</span>
+            <span class="n">Instantiate</span><span class="p">(</span><span class="n">prefab</span><span class="p">,</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">,</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
       </div>
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/ladace/unity-code-snippets">Unity-code-snippets</a> is maintained by <a href="https://github.com/ladace">ladace</a>.</span>
@@ -414,6 +436,6 @@ The thing should have a <code>Rigidbody2D</code> on it.</p>
       $('#content').toc();
     </script>
 
-  
+
   </body>
 </html>

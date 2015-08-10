@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Creating Visual and Sound Feedbacks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/jquery.toc.js"></script>
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Unity-code-snippets</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/ladace/unity-code-snippets" class="btn">View on GitHub</a>
+      <a href="https://github.com/ladace/unity-code-snippets/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/ladace/unity-code-snippets/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <nav style="margin-bottom: 20px">
+        <large><a href="/unity-code-snippets/">Goto Home</a></large>
+      </nav>
+      <div id="content">
+        <h1>Creating Visual and Sound Feedbacks</h1>
+
+<p>When a player makes a choice, or encounters an event in game, the game shows feedbacks to the player. Thus the player learns what happens.
+There is an opinion that a game should show three different feedbacks (visual or auditory).</p>
+
+<h2>Visual Feedbacks</h2>
+
+<p>Visual feedbacks are mostly a new GameObject created temporarily, which often fades away after a period of time.</p>
+
+<p>How to create a visual feedback:</p>
+
+<ol>
+<li>Make a prefab for the visual feedback.</li>
+<li>Go to the code file where the event happens. Insert a member variable, whose type is <code>GameObject</code>. The code inserted is <code>public GameObject &lt;any name&gt;</code>.</li>
+<li>Inside the code where the event actually happens, mostly it is inside <code>OnTriggerEnter2D</code> or <code>OnCollisionEnter2D</code>. Insert a line: <code>Instantiate(&lt;the variable name&gt;, transform.position, Quaternion.identity);</code></li>
+<li>Save the code and go back to Unity editor. Assign the prefab to the new variable you just added.</li>
+<li>Optionally you need to attach <a href="general.html#DestroyAfter"><code>DestroyAfter</code></a> script to the prefab if you want the feedback to disappeaer after a certain time.</li>
+</ol>
+
+<h2>Sound Feedbacks</h2>
+
+<p>Sound feedbacks are simple. Mostly they are just playing the sounds.</p>
+
+<p>How to create a sound feedback:</p>
+
+<ol>
+<li>Have the sound file in your project.</li>
+<li>Go to the coe file where the event happens. Insert a member variable, whose type is <code>AudioClip</code>. The code inserted is <code>public AudioClip &lt;any name&gt;</code>.</li>
+<li>Inside the code where the event actually happens, mostly it is inside <code>OnTriggerEnter2D</code> or <code>OnCollisionEnter2D</code>. Insert a line:
+<code>GetComponent&lt;AudioSource&gt;().PlayOneShot(&lt;the variable name&gt;);</code>. <strong>If the object that the code is attached is going to be destroyed in this event, this won&#39;t be effective!</strong></li>
+<li>Save the code and go back to Unity editor. Add an AudioSource component to the object that the code is attached.</li>
+<li>Assign the audio clip file to the new variable you just added.</li>
+</ol>
+
+      </div>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/ladace/unity-code-snippets">Unity-code-snippets</a> is maintained by <a href="https://github.com/ladace">ladace</a>.</span>
+
+        <span class="site-footer-credits"><a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+    <script type="text/javascript">
+      $('#content').toc();
+    </script>
+
+
+  </body>
+</html>
