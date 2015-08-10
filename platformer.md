@@ -51,7 +51,6 @@ public class Player : MonoBehaviour {
 		if (Input.GetButtonDown ("Jump")) {
 			if (OnGround())
 				GetComponent<Rigidbody2D>().velocity = new Vector2(speed * Input.GetAxis ("Horizontal"), jumpSpeed);
-			}
 		}
 	}
 
@@ -106,6 +105,7 @@ public class PlayerAnimation : MonoBehaviour {
 			animationTimer -= 1/frameRate;
 			if (currentAnimation == walkingFrames) animationIdx %= walkingFrames.Length;
 			else animationIdx = Mathf.Min(animationIdx, currentAnimation.Length - 1);
+			if (velocity.x >= -0.01f && velocity.x <= 0.01f && currentAnimation == walkingFrames) animationIdx = 0; 
 
 			GetComponent<SpriteRenderer>().sprite = currentAnimation[animationIdx];
 		}
@@ -118,7 +118,7 @@ public class PlayerAnimation : MonoBehaviour {
 using UnityEngine;
 using System.Collections;
 
-public class FrameAnimation {
+public class FrameAnimation : MonoBehaviour {
 	public Sprite[] frames;
 	public float frameRate;
 	public bool looping = true;
@@ -371,8 +371,10 @@ public class Checkpoint : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded (int level) {
-		GameObject.FindWithTag("Player").transform.position = transform.position;
-		Destroy(gameObject);
+		if (activeCheckpoint == this) {
+			GameObject.FindWithTag("Player").transform.position = transform.position;
+			Destroy(gameObject);
+		}
 	}
 
 	static public void RestartFromCheckpoint () {
@@ -386,7 +388,7 @@ public class Checkpoint : MonoBehaviour {
 
 ## Shooting
 
-Make a bullet prefab. Ensure the bullet has [`MovingAlong`](#MovingAlong) component.
+Make a bullet prefab. Ensure the bullet has been attached [`MovingAlong`](#MovingAlong) script.
 
 Attach this script to the player.
 
@@ -399,13 +401,14 @@ using System.Collections;
 public class Shooting : MonoBehaviour {
 	public GameObject bulletPrefab;
 	public float coolDown = 0.3f;
+	public float bulletSpeed = 1;
 	private float timer = 0f;
 
 	void Update () {
 		timer -= Time.deltaTime;
 		if (Input.GetButton("Fire1") && timer <= 0f) {
 			GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity) as GameObject;
-			bullet.GetComponent<MovingAlong>().movingDirection = new Vector2(transform.localScale.x > 0 ? 1 : -1, 0);
+			bullet.GetComponent<MovingAlong>().movingDirection = new Vector2(transform.localScale.x > 0 ? bulletSpeed : -bulletSpeed, 0);
 			timer = coolDown;
 		}
 	}
@@ -445,17 +448,17 @@ using UnityEngine;
 using System.Collections;
 
 public class Spawner : MonoBehaviour {
-	public GameObject prefab;
+	public GameObject[] prefabs;
 	public float interval;
 
-	public Start () {
+	public void Start () {
 		StartCoroutine(SpawnRoutine());
 	}
 
 	public IEnumerator SpawnRoutine () {
 		while (true) {
 			yield return new WaitForSeconds(interval);
-			Instantiate(prefab, transform.position, Quaternion.identity);
+			Instantiate(prefabs[Random.Range(0, prefabs.Length)], transform.position, Quaternion.identity);
 		}
 	}
 }
