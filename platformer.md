@@ -463,3 +463,23 @@ public class Spawner : MonoBehaviour {
 	}
 }
 ```
+
+## Activate A Script When Near Player
+
+```csharp
+using UnityEngine;
+using System.Collections;
+
+public class AlertInRange : MonoBehaviour {
+	public MonoBehaviour component;
+	public float alertDistance;
+	
+	void Update () {
+		GameObject player = GameObject.FindWithTag("Player");
+		if (Vector2.Distance(player.transform.position, this.transform.position) < alertDistance) {
+			component.enabled = true;
+		} else {
+			component.enabled = false;
+		}
+	}
+}
