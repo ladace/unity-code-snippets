@@ -351,7 +351,7 @@ public class CameraFollow2D : MonoBehaviour {
 
 ## Checkpoints
 
-The checkpoint will record the player position. Replace `Checkpoint.RestartFromCheckpoint()` with `Application.LoadLevel(Application.loadedLevel)` in the death code. The checkpoint cannot work with a gameover screen for now.
+The checkpoint will record the player position. Replace `Application.LoadLevel(Application.loadedLevel)` with `Checkpoint.RestartFromCheckpoint()` in the death code. The checkpoint cannot work with a gameover screen for now.
 
 Use `order` for the priority of different checkpoints. Checkpoints with a bigger order are supposed to mean more progress in game, so when player backtracks he won't activate earlier checkpoints.
 
