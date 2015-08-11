@@ -57,7 +57,8 @@ public class Player : MonoBehaviour {
 	public bool OnGround () {
 		BoxCollider2D col = GetComponent<BoxCollider2D> ();
 		Vector2 scale = transform.localScale;
-		RaycastHit2D res = Physics2D.BoxCast ((Vector2)transform.position + Vector2.Scale (scale, col.offset), Vector2.Scale (scale, col.size),
+		Vector2 size = Vector2.Scale(new Vector2(Mathf.Abs(scale.x), scale.y), col.size);
+		RaycastHit2D res = Physics2D.BoxCast ((Vector2)transform.position + Vector2.Scale (scale, col.offset), size,
 											transform.rotation.eulerAngles.z, Vector2.down, Mathf.Infinity, groundMask);
 
 		return res.collider != null && res.distance <= 0.02f;
@@ -86,7 +87,7 @@ public class PlayerAnimation : MonoBehaviour {
 		Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
 		// flip the player
 		if (velocity.x > 0 && transform.localScale.x < 0 || velocity.x < 0 && transform.localScale.x > 0)
-			transform.localScale.Set(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+			transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 		// play the animation
 		Sprite[] frames;
 
