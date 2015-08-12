@@ -106,7 +106,7 @@ public class PlayerAnimation : MonoBehaviour {
 			animationTimer -= 1/frameRate;
 			if (currentAnimation == walkingFrames) animationIdx %= walkingFrames.Length;
 			else animationIdx = Mathf.Min(animationIdx, currentAnimation.Length - 1);
-			if (velocity.x >= -0.01f && velocity.x <= 0.01f && currentAnimation == walkingFrames) animationIdx = 0; 
+			if (velocity.x >= -0.01f && velocity.x <= 0.01f && currentAnimation == walkingFrames) animationIdx = 0;
 
 			GetComponent<SpriteRenderer>().sprite = currentAnimation[animationIdx];
 		}
@@ -467,20 +467,56 @@ public class Spawner : MonoBehaviour {
 
 ## Activate A Script When Near Player
 
+This script will activate a script when nearing the player, and deactivate another script optionally at the same time.
+
 ```csharp
 using UnityEngine;
 using System.Collections;
 
 public class AlertInRange : MonoBehaviour {
-	public MonoBehaviour component;
+	public MonoBehaviour activeComponent;
+	public MonoBehaviour inactiveComponent;
 	public float alertDistance;
-	
+
 	void Update () {
 		GameObject player = GameObject.FindWithTag("Player");
 		if (Vector2.Distance(player.transform.position, this.transform.position) < alertDistance) {
-			component.enabled = true;
+			activeComponent.enabled = true;
+			if (inactiveComponent != null)
+				inactiveComponent.enabled = false;
 		} else {
-			component.enabled = false;
+			activeComponent.enabled = false;
+			if (inactiveComponent != null)
+				inactiveComponent.enabled = true;
 		}
 	}
 }
+
+
+## Vertical Loop Movement
+
+Could be used with moving enemies and platforms.
+
+``csharp
+using UnityEngine;
+using System.Collections;
+
+public class VerticalLoopMovement : MonoBehaviour {
+	public float range;
+	public float moveSpeed;
+
+	private Vector3 origin;
+	private int direction = 1;
+
+	void Start () {
+		origin = transform.position;
+		direction = 1;
+	}
+
+	void Update () {
+		transform.position += direction * new Vector3(0, direction * moveSpeed * Time.deltaTime);
+		if (direction > 0 && transform.position.y > origin.y + range) direction = -1;
+		if (direction < 0 && transform.position.y < origin.y - range) direction = 1;
+	}
+}
+```
