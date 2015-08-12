@@ -497,7 +497,7 @@ public class AlertInRange : MonoBehaviour {
 
 Could be used with moving enemies and platforms.
 
-``csharp
+```csharp
 using UnityEngine;
 using System.Collections;
 
