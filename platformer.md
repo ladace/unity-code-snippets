@@ -401,7 +401,7 @@ using System.Collections;
 
 public class Shooting : MonoBehaviour {
 	public GameObject bulletPrefab;
-	public float coolDown = 0.3f;
+	public float cooldown = 0.3f;
 	public float bulletSpeed = 1;
 	private float timer = 0f;
 
@@ -411,6 +411,46 @@ public class Shooting : MonoBehaviour {
 			GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity) as GameObject;
 			bullet.GetComponent<MovingAlong>().movingDirection = new Vector2(transform.localScale.x > 0 ? bulletSpeed : -bulletSpeed, 0);
 			timer = coolDown;
+		}
+	}
+}
+```
+
+## Melee
+
+Create a empty child object on the player, rename it as "Attack Box" and tag it as "Bullet". Add a 2D collider (like BoxCollider2D) and toggle on "Is Trigger".
+
+Attach this script to the player. Assign `attackBox` with the child object you just created.
+
+```csharp
+using UnityENgine;
+using System.Collections;
+
+public class Melee : MonoBehaviour {
+	public GameObject attackBox;
+	public float cooldown = 0.3f;
+	public float duration = 0.2f;
+	
+	private float attackTimer = 0f;
+	private float cooldownTimer;
+	
+	void Update () {
+		if (attackTimer > 0) {
+			attackTimer -= Time.deltaTime;
+			if (attackTimer <= 0) {
+				attackBox.SetActive(false);
+			}
+		} else {
+			if (cooldownTimer > 0) {
+				cooldownTimer -= Time.deltaTime;
+			} else {
+				if (Input.GetButtonDown("Fire1")) {
+					attackTimer = duration;
+					cooldownTimer = cooldown;
+					
+					attackBox.SetActive(true);
+				}
+			}
 		}
 	}
 }
