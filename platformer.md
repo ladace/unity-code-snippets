@@ -78,6 +78,7 @@ public class PlayerAnimation : MonoBehaviour {
 
 	public Sprite[] walkingFrames;
 	public Sprite[] jumpingFrames;
+	public Sprite[] meleeFrames;
 	public float frameRate = 5;
 	private float animationTimer = 0f;
 	private int animationIdx;
@@ -91,6 +92,7 @@ public class PlayerAnimation : MonoBehaviour {
 		// play the animation
 		Sprite[] frames;
 
+		if (GetComponent<Melee>() != null && GetComponent<Melee>().attacking) frames = meleeFrames;
 		if (GetComponent<Player>().OnGround()) frames = walkingFrames;
 		else frames = jumpingFrames;
 
@@ -104,7 +106,7 @@ public class PlayerAnimation : MonoBehaviour {
 		if (animationTimer > 1/frameRate) {
 			animationIdx++;
 			animationTimer -= 1/frameRate;
-			if (currentAnimation == walkingFrames) animationIdx %= walkingFrames.Length;
+			if (currentAnimation != jumpingFrames) animationIdx %= currentAnimation.Length;
 			else animationIdx = Mathf.Min(animationIdx, currentAnimation.Length - 1);
 			if (velocity.x >= -0.01f && velocity.x <= 0.01f && currentAnimation == walkingFrames) animationIdx = 0;
 
