@@ -330,6 +330,34 @@ public class EnemyFollow : MonoBehaviour {
 }
 ```
 
+## Enemy Jumping Every Time Interval
+
+```csharp
+using UnityEngine;
+using System.Collections;
+
+public class EnemyJump : MonoBehaviour {
+	public float interval;
+	public float jumpSpeed;
+	
+	private float timer;
+	
+	void Start () {
+		timer = interval;
+	}
+	
+	void Update () {
+		timer -= Time.deltaTime;
+		if (timer < 0) {
+			timer = interval;
+			Vector2 oldV = GetComponent<Rigidbody2D>().velocity;
+			oldV.y = jumpSpeed;
+			GetComponent<Rigidbody2D>().velocity = oldV;
+		}
+	}
+}
+```
+
 ## Camera Follow 2D
 
 To use this, you camera should not be a child of the player.
