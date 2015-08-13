@@ -431,6 +431,12 @@ public class Melee : MonoBehaviour {
 	public float cooldown = 0.3f;
 	public float duration = 0.2f;
 	
+	public bool attacking {
+		get {
+			return attackTimer > 0;
+		}
+	}
+	
 	private float attackTimer = 0f;
 	private float cooldownTimer;
 	
