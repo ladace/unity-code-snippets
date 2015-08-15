@@ -141,7 +141,7 @@ public class FrameAnimation : MonoBehaviour {
 	}
 }
 ```
-### Fly
+## Fly
 
 Press a button you can fly.
 
